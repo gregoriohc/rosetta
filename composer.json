@@ -1,0 +1,25 @@
+{
+    "name": "gregoriohc/rosetta",
+    "description": "Multi-protocol multi-format data transformer interface",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gregorio Hernandez Caso",
+            "email": "gregoriohc@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "5.5.*",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.*",
+        "psy/psysh": "^0.8.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ghc\\Rosetta\\": "src/"
+        }
+    }
+}
