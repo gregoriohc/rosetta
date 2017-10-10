@@ -36,4 +36,12 @@ class PhpObject extends Message
 
         return $this->set($o);
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return serialize($this->toArray());
+    }
 }

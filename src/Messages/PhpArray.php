@@ -30,4 +30,12 @@ class PhpArray extends Message
     {
         return $this->set($data);
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return serialize($this->toArray());
+    }
 }
