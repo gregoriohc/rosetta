@@ -23,8 +23,9 @@ abstract class Connector
     }
 
     /**
+     * Boot Connector
      */
-    abstract public function boot();
+    abstract protected function boot();
 
     /**
      * @param string $uri

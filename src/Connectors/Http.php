@@ -2,6 +2,7 @@
 
 namespace Ghc\Rosetta\Connectors;
 
+use Ghc\Rosetta\Messages\HttpResponse;
 use GuzzleHttp\Client;
 
 class Http extends Connector
@@ -13,7 +14,10 @@ class Http extends Connector
      */
     protected $client;
 
-    public function boot()
+    /**
+     * Boot Connector
+     */
+    protected function boot()
     {
         if (!isset($this->config['client'])) $this->config['client'] = [];
 
@@ -28,7 +32,7 @@ class Http extends Connector
      */
     public function show($uri, $options = [])
     {
-        return $this->client->request('GET', $uri, $options);
+        return new HttpResponse($this->client->request('GET', $uri, $options));
     }
 
     /**
@@ -41,7 +45,7 @@ class Http extends Connector
     {
         if ($data) $options['form_params'] = $data;
 
-        return $this->client->request('POST', $uri, $options);
+        return new HttpResponse($this->client->request('POST', $uri, $options));
     }
 
     /**
@@ -54,7 +58,7 @@ class Http extends Connector
     {
         if ($data) $options['form_params'] = $data;
 
-        return $this->client->request('PATCH', $uri, $options);
+        return new HttpResponse($this->client->request('PATCH', $uri, $options));
     }
 
     /**
@@ -67,7 +71,7 @@ class Http extends Connector
     {
         if ($data) $options['form_params'] = $data;
 
-        return $this->client->request('PUT', $uri, $options);
+        return new HttpResponse($this->client->request('PUT', $uri, $options));
     }
 
     /**
@@ -77,6 +81,6 @@ class Http extends Connector
      */
     public function delete($uri, $options = [])
     {
-        return $this->client->request('DELETE', $uri, $options);
+        return new HttpResponse($this->client->request('DELETE', $uri, $options));
     }
 }
