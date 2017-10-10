@@ -19,11 +19,10 @@ class MoneyValues extends Transformer
      */
     protected function boot()
     {
-        $this->config = array_merge([
+        $this->addDefaultConfig([
             'locale' => 'en_US',
             'currency_code' => 'USD',
-            'properties' => [],
-        ], $this->config);
+        ]);
 
         $currencies = new ISOCurrencies();
         $numberFormatter = new \NumberFormatter($this->config['locale'], \NumberFormatter::CURRENCY);

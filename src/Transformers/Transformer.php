@@ -23,6 +23,9 @@ abstract class Transformer
     public function __construct($config = [])
     {
         $this->config = $config;
+        $this->addDefaultConfig([
+            'properties' => [],
+        ]);
 
         $this->boot();
     }
@@ -48,6 +51,14 @@ abstract class Transformer
         }
 
         return $relationsData;
+    }
+
+    /**
+     * @param array $config
+     */
+    protected function addDefaultConfig($config)
+    {
+        $this->config = array_merge($config, $this->config);
     }
 
     /**
