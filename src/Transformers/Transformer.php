@@ -5,16 +5,39 @@ namespace Ghc\Rosetta\Transformers;
 abstract class Transformer
 {
     /**
+     * Configuration options
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
      * @var array
      */
     protected $relations = [];
 
     /**
+     * Connector constructor.
+     * @param array $config
+     */
+    public function __construct($config = [])
+    {
+        $this->config = $config;
+
+        $this->boot();
+    }
+
+    /**
+     * Boot Transformer
+     */
+    protected function boot()
+    {
+    }
+
+    /**
      * @param array $data
      * @return array
      */
-    abstract public function transform($data);
-
     public function processRelations($data)
     {
         $relationsData = [];
@@ -26,4 +49,10 @@ abstract class Transformer
 
         return $relationsData;
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    abstract public function transform($data);
 }
