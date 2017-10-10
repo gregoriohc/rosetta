@@ -3,33 +3,48 @@
 namespace Ghc\Rosetta;
 
 use Ghc\Rosetta\Connectors\Connector;
+use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Messages\Message;
 
 class Manager
 {
     /**
-     * @param string $name
+     * @param string $class
      * @param array $config
      * @return Connector
+     * @throws \Exception
      */
-    public static function connector($name, $config = [])
+    public static function connector($class, $config = [])
     {
-        $name = '\\Ghc\\Rosetta\\Connectors\\' . camel_case($name);
+        if (!str_contains($class, '\\')) {
+            $class = '\\Ghc\\Rosetta\\Connectors\\' . camel_case($class);
+        }
 
-        return new $name($config);
+        if (!class_exists($class)) {
+            throw new ManagerException("Connector class '$class' does not exists");
+        }
+
+        return new $class($config);
     }
 
     /**
-     * @param string $type
+     * @param string $class
      * @param null|mixed $data
      * @param array $config
      * @return Message
+     * @throws \Exception
      */
-    public static function message($type, $data = null, $config = [])
+    public static function message($class, $data = null, $config = [])
     {
-        $name = '\\Ghc\\Rosetta\\Messages\\' . camel_case($type);
+        if (!str_contains($class, '\\')) {
+            $class = '\\Ghc\\Rosetta\\Messages\\' . camel_case($class);
+        }
 
-        return new $name($data, $config);
+        if (!class_exists($class)) {
+            throw new ManagerException("Message class '$class' does not exists");
+        }
+
+        return new $class($data, $config);
     }
 
     /**
