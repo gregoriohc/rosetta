@@ -7,7 +7,7 @@ class PhpObject extends Message
     /**
      * @return \stdClass
      */
-    public function new()
+    public function newData()
     {
         return new \stdClass();
     }
@@ -19,7 +19,7 @@ class PhpObject extends Message
      */
     public function toArray()
     {
-        return get_object_vars($this->get());
+        return get_object_vars($this->getData());
     }
 
     /**
@@ -28,13 +28,13 @@ class PhpObject extends Message
      */
     public function fromArray($data)
     {
-        $o = $this->get();
+        $o = $this->getData();
 
         foreach ($data as $key => $value) {
             $o->$key = $value;
         }
 
-        return $this->set($o);
+        return $this->setData($o);
     }
 
     /**

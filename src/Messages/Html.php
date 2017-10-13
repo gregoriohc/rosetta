@@ -9,7 +9,7 @@ class Html extends Xml
     /**
      * @return string
      */
-    public function new()
+    public function newData()
     {
         return '<html></html>';
     }
@@ -24,7 +24,7 @@ class Html extends Xml
         libxml_use_internal_errors(true);
         $root = new DOMDocument();
         $root->preserveWhiteSpace = false;
-        $root->loadHTML($this->get());
+        $root->loadHTML($this->getData());
 
         return $this->domNodeToArray($root);
     }

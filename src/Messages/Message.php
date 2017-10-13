@@ -29,14 +29,23 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
      */
     public function __construct($data = null, $config = [])
     {
-        $this->data = $data ?: $this->new();
-        $this->config = $config;
+        $this->setData($data ?: $this->newData());
+        $this->setConfig($config);
+
+        $this->boot();
+    }
+
+    /**
+     * Boot Transformer
+     */
+    protected function boot()
+    {
     }
 
     /**
      * @return null
      */
-    public function new()
+    public function newData()
     {
         return null;
     }
@@ -44,7 +53,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
     /**
      * @return mixed
      */
-    public function get()
+    public function getData()
     {
         return $this->data;
     }
@@ -53,7 +62,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
      * @param mixed $data
      * @return self
      */
-    public function set($data)
+    public function setData($data)
     {
         $this->data = $data;
 
@@ -61,11 +70,33 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
     }
 
     /**
+     * @param array $config
+     * @return Message
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
      * @return string
      */
     public function serialize()
     {
-        return serialize($this->toArray());
+        return serialize([
+            'data' => $this->toArray(),
+            'config' => $this->getConfig(),
+        ]);
     }
 
     /**
@@ -73,7 +104,9 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
      */
     public function unserialize($serialized)
     {
-        $this->fromArray(unserialize($serialized));
+        $unserialized = unserialize($serialized);
+        $this->fromArray($unserialized['data']);
+        $this->setConfig($unserialized['config']);
     }
 
     /**
@@ -89,7 +122,15 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
      */
     public function __toString()
     {
-        return (string) $this->data;
+        return (string) $this->getData();
+    }
+
+    /**
+     * @param array $config
+     */
+    protected function addDefaultConfig($config)
+    {
+        $this->setConfig(array_merge($config, $this->getConfig()));
     }
 
     /**

@@ -7,9 +7,9 @@ class Json extends Message
     /**
      * @return string
      */
-    public function new()
+    public function newData()
     {
-        return '';
+        return '{}';
     }
 
     /**
@@ -19,7 +19,7 @@ class Json extends Message
      */
     public function toArray()
     {
-        return json_decode($this->get());
+        return json_decode($this->getData(), true);
     }
 
     /**
@@ -28,6 +28,6 @@ class Json extends Message
      */
     public function fromArray($data)
     {
-        return $this->set(json_encode($data));
+        return $this->setData(json_encode($data));
     }
 }

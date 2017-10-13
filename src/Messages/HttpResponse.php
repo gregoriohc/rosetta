@@ -12,7 +12,7 @@ class HttpResponse extends Message
     /**
      * @return string
      */
-    public function new()
+    public function newData()
     {
         return new Response();
     }
@@ -25,9 +25,9 @@ class HttpResponse extends Message
     public function toArray()
     {
         return [
-            'status_code' => $this->get()->getStatusCode(),
-            'headers' => $this->get()->getHeaders(),
-            'body' => $this->get()->getBody(),
+            'status_code' => $this->getData()->getStatusCode(),
+            'headers' => $this->getData()->getHeaders(),
+            'body' => $this->getData()->getBody(),
         ];
     }
 
@@ -37,7 +37,7 @@ class HttpResponse extends Message
      */
     public function fromArray($data)
     {
-        return $this->set(new Response($data['status_code'], $data['body'], $data['headers']));
+        return $this->setData(new Response($data['status_code'], $data['headers'], $data['body']));
     }
 
     /**
@@ -45,6 +45,6 @@ class HttpResponse extends Message
      */
     public function __toString()
     {
-        return (string) $this->get()->getBody();
+        return (string) $this->getData()->getBody();
     }
 }

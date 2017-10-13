@@ -10,7 +10,7 @@ class Xml extends Message
     /**
      * @return string
      */
-    public function new()
+    public function newData()
     {
         return '<xml></xml>';
     }
@@ -25,7 +25,7 @@ class Xml extends Message
         libxml_use_internal_errors(true);
         $root = new DOMDocument();
         $root->preserveWhiteSpace = false;
-        $root->loadXML($this->get());
+        $root->loadXML($this->getData());
 
         return $this->domNodeToArray($root);
     }
@@ -52,6 +52,8 @@ class Xml extends Message
             foreach ($attrs as $attr) {
                 $result['@attributes'][$attr->name] = $attr->value;
             }
+        } else {
+            $result['@attributes'] = [];
         }
 
         if ($root->hasChildNodes()) {
@@ -60,9 +62,7 @@ class Xml extends Message
                 $child = $children->item(0);
                 if ($child->nodeType == XML_TEXT_NODE) {
                     $result['_value'] = $child->nodeValue;
-                    return count($result) == 1
-                        ? $result['_value']
-                        : $result;
+                    return $result;
                 }
             }
             $groups = array();

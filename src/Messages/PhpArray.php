@@ -7,7 +7,7 @@ class PhpArray extends Message
     /**
      * @return array
      */
-    public function new()
+    public function newData()
     {
         return [];
     }
@@ -19,7 +19,7 @@ class PhpArray extends Message
      */
     public function toArray()
     {
-        return $this->get();
+        return $this->getData();
     }
 
     /**
@@ -28,7 +28,7 @@ class PhpArray extends Message
      */
     public function fromArray($data)
     {
-        return $this->set($data);
+        return $this->setData($data);
     }
 
     /**
