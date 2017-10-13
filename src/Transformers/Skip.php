@@ -2,7 +2,7 @@
 
 namespace Ghc\Rosetta\Transformers;
 
-class None extends Transformer
+class Skip extends Transformer
 {
     /**
      * @param array $data
