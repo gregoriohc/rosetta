@@ -20,8 +20,8 @@ class MoneyValues extends Transformer
     protected function boot()
     {
         $this->addDefaultConfig([
-            'locale' => 'en_US',
-            'currency_code' => 'USD',
+            'locale' => setlocale(LC_ALL, 0),
+            'currency_code' => (new \NumberFormatter(setlocale(LC_ALL, 0), \NumberFormatter::CURRENCY))->getTextAttribute(\NumberFormatter::CURRENCY_CODE),
         ]);
 
         $currencies = new ISOCurrencies();
@@ -56,12 +56,19 @@ class MoneyValues extends Transformer
      */
     private function parseMoney($value)
     {
-        /** @var \Money\Money $money */
-        $money = $this->moneyParser->parse($value);
+        $isNegative = str_contains($value, '-');
+        $valueToParse = str_replace([' ','+','-'], '', $value);
 
-        return [
-            'amount' => (int) $money->getAmount(),
-            'currency' => $money->getCurrency()->getCode(),
-        ];
+        try{
+            /** @var \Money\Money $money */
+            $money = $this->moneyParser->parse($valueToParse);
+            $value = [
+                'amount' => (int) (!$isNegative ? $money->getAmount() : -$money->getAmount()),
+                'currency' => $money->getCurrency()->getCode(),
+            ];
+        } catch (\Exception $e) {
+        }
+
+        return $value;
     }
 }
