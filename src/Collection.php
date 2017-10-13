@@ -11,7 +11,7 @@ class Collection extends Item
      */
     public function toArray()
     {
-        return collect($this->data)->map(function($itemData) {
+        return collect($this->getData())->map(function($itemData) {
             return (new Item($itemData, $this->transformers))->toArray();
         })->toArray();
     }
