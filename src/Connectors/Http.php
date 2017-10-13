@@ -21,7 +21,26 @@ class Http extends Connector
     {
         if (!isset($this->config['client'])) $this->config['client'] = [];
 
-        $this->client = new Client($this->config['client']);
+        $this->setClient(new Client($this->config['client']));
+    }
+
+    /**
+     * @param Client $client
+     * @return Http
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
 
