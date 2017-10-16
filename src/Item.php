@@ -23,7 +23,7 @@ class Item implements Arrayable
      * @param array|mixed $data
      * @param Transformer|Transformer[] $transformers
      */
-    public function __construct($data, $transformers = null)
+    public function __construct($data = [], $transformers = null)
     {
         $this->setData($data);
         $this->setTransformers($transformers);
@@ -84,5 +84,17 @@ class Item implements Arrayable
         }
 
         return $data;
+    }
+
+    /**
+     * @param array $options
+     * @return \Closure
+     */
+    public function pipe($options = [])
+    {
+        return function($inputData) use ($options) {
+            $this->setData($inputData);
+            return $this->toArray();
+        };
     }
 }

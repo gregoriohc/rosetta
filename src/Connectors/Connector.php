@@ -2,14 +2,11 @@
 
 namespace Ghc\Rosetta\Connectors;
 
+use Ghc\Rosetta\Configurable;
+
 abstract class Connector
 {
-    /**
-     * Configuration options
-     *
-     * @var array
-     */
-    protected $config;
+    use Configurable;
 
     /**
      * Connector constructor.
@@ -17,7 +14,7 @@ abstract class Connector
      */
     public function __construct($config = [])
     {
-        $this->config = $config;
+        $this->setConfig($config);
 
         $this->boot();
     }

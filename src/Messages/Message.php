@@ -2,25 +2,23 @@
 
 namespace Ghc\Rosetta\Messages;
 
+use Ghc\Rosetta\Configurable;
+use Ghc\Rosetta\Pipes\Pipeable;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 use JsonSerializable;
 use Serializable;
 
-abstract class Message implements Arrayable, Serializable, JsonSerializable
+abstract class Message implements Arrayable, Serializable, JsonSerializable, Pipeable
 {
+    use Configurable;
+
     /**
      * Message data
      *
      * @var mixed
      */
     protected $data;
-
-    /**
-     * Configuration options
-     *
-     * @var array
-     */
-    protected $config;
 
     /**
      * Message constructor.
@@ -70,25 +68,6 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
     }
 
     /**
-     * @param array $config
-     * @return Message
-     */
-    public function setConfig($config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
      * @return string
      */
     public function serialize()
@@ -126,11 +105,21 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable
     }
 
     /**
-     * @param array $config
+     * @param array $options
+     * @return \Closure
      */
-    protected function addDefaultConfig($config)
+    public function pipe($options = [])
     {
-        $this->setConfig(array_merge($config, $this->getConfig()));
+        return function($inputData) use ($options) {
+            $fromArray = Arr::get($options, 'fromArray', true);
+            if ($fromArray) {
+                $this->fromArray($inputData);
+            } else {
+                $this->setData($inputData);
+            }
+
+            return $this->toArray();
+        };
     }
 
     /**

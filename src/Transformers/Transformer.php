@@ -2,14 +2,11 @@
 
 namespace Ghc\Rosetta\Transformers;
 
+use Ghc\Rosetta\Configurable;
+
 abstract class Transformer
 {
-    /**
-     * Configuration options
-     *
-     * @var array
-     */
-    protected $config;
+    use Configurable;
 
     /**
      * @var array
@@ -22,7 +19,8 @@ abstract class Transformer
      */
     public function __construct($config = [])
     {
-        $this->config = $config;
+        $this->setConfig($config);
+
         $this->addDefaultConfig([
             'properties' => [],
         ]);
@@ -51,14 +49,6 @@ abstract class Transformer
         }
 
         return $relationsData;
-    }
-
-    /**
-     * @param array $config
-     */
-    protected function addDefaultConfig($config)
-    {
-        $this->config = array_merge($config, $this->config);
     }
 
     /**

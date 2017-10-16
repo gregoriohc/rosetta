@@ -3,6 +3,7 @@
 namespace Ghc\Rosetta;
 
 use Ghc\Rosetta\Connectors\Connector;
+use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Messages\Message;
 use Ghc\Rosetta\Transformers\Transformer;
@@ -26,6 +27,19 @@ class Manager
         }
 
         return new $class($config);
+    }
+
+    /**
+     * @param Connector $connector
+     * @param string $method
+     * @param string $uri
+     * @param mixed|null $data
+     * @param array $options
+     * @return Request
+     */
+    public static function connectorRequest(Connector $connector, $method, $uri, $data = null, $options = [])
+    {
+        return new Request($connector, $method, $uri, $data, $options);
     }
 
     /**
@@ -85,6 +99,33 @@ class Manager
     public static function collection($data, $transformers = null)
     {
         return new Collection($data, $transformers);
+    }
+
+    /**
+     * @param string $class
+     * @return
+     * @throws ManagerException
+     */
+    public static function pipe($class)
+    {
+        if (!str_contains($class, '\\')) {
+            $class = '\\Ghc\\Rosetta\\Pipes\\' . studly_case($class);
+        }
+
+        if (!class_exists($class)) {
+            throw new ManagerException("Pipe class '$class' does not exists");
+        }
+
+        return new $class();
+    }
+
+    /**
+     * @param array $config
+     * @return Pipeline
+     */
+    public static function pipeline($config = [])
+    {
+        return new Pipeline($config);
     }
 
     /**

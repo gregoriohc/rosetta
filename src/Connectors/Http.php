@@ -19,9 +19,9 @@ class Http extends Connector
      */
     protected function boot()
     {
-        if (!isset($this->config['client'])) $this->config['client'] = [];
+        if (!$this->config->has('client')) $this->config->set('client', []);
 
-        $this->setClient(new Client($this->config['client']));
+        $this->setClient(new Client($this->config->get('client')));
     }
 
     /**
