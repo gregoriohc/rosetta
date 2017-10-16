@@ -10,11 +10,11 @@ class CollectionTest extends TestCase
     public function testToArray()
     {
         $data = [['foo' => 'bar'], ['bar' => 'foo']];
-        $item = new Collection($data);
+        $collection = new Collection($data);
 
         $this->assertEquals(
             $data,
-            $item->toArray()
+            $collection->toArray()
         );
     }
 }
