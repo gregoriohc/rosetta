@@ -120,6 +120,26 @@ class Manager
     }
 
     /**
+     * @param string $class
+     * @param null|mixed $data
+     * @param array $config
+     * @return
+     * @throws ManagerException
+     */
+    public static function matcher($class, $data = null, $config = [])
+    {
+        if (!str_contains($class, '\\')) {
+            $class = '\\Ghc\\Rosetta\\Matchers\\' . studly_case($class);
+        }
+
+        if (!class_exists($class)) {
+            throw new ManagerException("Matcher class '$class' does not exists");
+        }
+
+        return new $class($data, $config);
+    }
+
+    /**
      * @param array $config
      * @return Pipeline
      */
