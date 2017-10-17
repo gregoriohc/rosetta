@@ -179,7 +179,7 @@ class Request implements Pipeable
     public function pipe($options = [])
     {
         return function($inputData) use ($options) {
-            if ($inputData) {
+            if (!is_null($inputData)) {
                 $this->setData($inputData);
             }
 

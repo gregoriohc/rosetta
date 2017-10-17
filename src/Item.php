@@ -2,11 +2,12 @@
 
 namespace Ghc\Rosetta;
 
+use Ghc\Rosetta\Pipes\Pipeable;
 use Ghc\Rosetta\Transformers\Skip;
 use Ghc\Rosetta\Transformers\Transformer;
 use Illuminate\Contracts\Support\Arrayable;
 
-class Item implements Arrayable
+class Item implements Arrayable, Pipeable
 {
     /**
      * @var array

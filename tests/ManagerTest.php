@@ -3,11 +3,14 @@
 namespace Tests\Ghc\Rosetta;
 
 use Ghc\Rosetta\Collection;
+use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Item;
 use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Messages\Html;
+use Ghc\Rosetta\Pipeline;
+use Ghc\Rosetta\Pipes\DataGetKey;
 use Ghc\Rosetta\Transformers\Skip;
 use PHPUnit\Framework\TestCase;
 
@@ -82,6 +85,29 @@ class ManagerTest extends TestCase
         );
     }
 
+    public function testCanCreatePipeFromShortName()
+    {
+        $this->assertInstanceOf(
+            DataGetKey::class,
+            Manager::pipe('DataGetKey')
+        );
+    }
+
+    public function testCannotCreatePipeFromInvalidShortName(): void
+    {
+        $this->expectException(ManagerException::class);
+
+        Manager::pipe('Wrong');
+    }
+
+    public function testCanCreatePipeFromClassName()
+    {
+        $this->assertInstanceOf(
+            DataGetKey::class,
+            Manager::pipe(DataGetKey::class)
+        );
+    }
+
     public function testCanTransformMessage()
     {
         $inputMessage = new Html();
@@ -108,6 +134,22 @@ class ManagerTest extends TestCase
         $this->assertInstanceOf(
             Collection::class,
             Manager::collection([])
+        );
+    }
+
+    public function testCanCreatePipeline()
+    {
+        $this->assertInstanceOf(
+            Pipeline::class,
+            Manager::pipeline([])
+        );
+    }
+
+    public function testCanCreateConnectorRequest()
+    {
+        $this->assertInstanceOf(
+            Request::class,
+            Manager::connectorRequest(Manager::connector('Http'), 'show', 'http://example.com')
         );
     }
 }
