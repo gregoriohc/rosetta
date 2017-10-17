@@ -7,6 +7,7 @@ use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Item;
 use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\HttpResponse;
 use Ghc\Rosetta\Pipeline;
 use Ghc\Rosetta\Pipes\DataGetKey;
@@ -109,6 +110,22 @@ class PipelineTest extends TestCase
         $this->assertEquals(
             '',
             (string) $pipeline->flow(['foo' => 'bar'])['body']
+        );
+    }
+
+    public function testCanFlowWithMatcher()
+    {
+        $pipeline = new Pipeline();
+        $pipeline->pushPipe(new DataIsArray());
+
+        $this->assertEquals(
+            [],
+            $pipeline->flow([])
+        );
+
+        $this->assertEquals(
+            '',
+            $pipeline->flow('')
         );
     }
 }

@@ -8,6 +8,7 @@ use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Item;
 use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Connectors\Http;
+use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\Html;
 use Ghc\Rosetta\Pipeline;
 use Ghc\Rosetta\Pipes\DataGetKey;
@@ -105,6 +106,29 @@ class ManagerTest extends TestCase
         $this->assertInstanceOf(
             DataGetKey::class,
             Manager::pipe(DataGetKey::class)
+        );
+    }
+
+    public function testCanCreateMatcherFromShortName()
+    {
+        $this->assertInstanceOf(
+            DataIsArray::class,
+            Manager::matcher('DataIsArray')
+        );
+    }
+
+    public function testCannotCreateMatcherFromInvalidShortName(): void
+    {
+        $this->expectException(ManagerException::class);
+
+        Manager::matcher('Wrong');
+    }
+
+    public function testCanCreateMatcherFromClassName()
+    {
+        $this->assertInstanceOf(
+            DataIsArray::class,
+            Manager::matcher(DataIsArray::class)
         );
     }
 
