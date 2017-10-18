@@ -3,11 +3,11 @@
 namespace Tests\Ghc\Rosetta;
 
 use Ghc\Rosetta\Collection;
+use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Item;
 use Ghc\Rosetta\Manager;
-use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\Html;
 use Ghc\Rosetta\Pipeline;

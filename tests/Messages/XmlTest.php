@@ -35,19 +35,19 @@ class XmlTest extends TestCase
         $this->assertEquals(
             [
                 '@attributes' => [],
-                'xml' => [
+                'xml'         => [
                     '@attributes' => [],
-                    'element' => [
+                    'element'     => [
                         [
                             '@attributes' => ['foo' => 'bar'],
-                            '_value' => 'foo'
+                            '_value'      => 'foo',
                         ],
                         [
                             '@attributes' => [],
-                            '_value' => 'bar'
-                        ]
-                    ]
-                ]
+                            '_value'      => 'bar',
+                        ],
+                    ],
+                ],
 
             ],
             $message->toArray()

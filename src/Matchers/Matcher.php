@@ -3,8 +3,8 @@
 namespace Ghc\Rosetta\Matchers;
 
 use Ghc\Rosetta\Configurable;
-use Ghc\Rosetta\Pipes\Pipeable;
 use Ghc\Rosetta\Pipeline;
+use Ghc\Rosetta\Pipes\Pipeable;
 use Illuminate\Support\Arr;
 
 abstract class Matcher implements Pipeable
@@ -18,6 +18,7 @@ abstract class Matcher implements Pipeable
 
     /**
      * Matcher constructor.
+     *
      * @param $data
      * @param $config
      */
@@ -37,6 +38,7 @@ abstract class Matcher implements Pipeable
 
     /**
      * @param mixed $data
+     *
      * @return self
      */
     public function setData($data)
@@ -47,13 +49,14 @@ abstract class Matcher implements Pipeable
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     abstract public function match();
 
     /**
      * @param \Closure $true
      * @param \Closure $false
+     *
      * @return mixed
      */
     public function matchAndRun($true, $false)
@@ -63,7 +66,7 @@ abstract class Matcher implements Pipeable
 
     public function pipe($options = [])
     {
-        return function($inputData) use ($options) {
+        return function ($inputData) use ($options) {
             $true = Arr::get($options, 'true', new Pipeline());
             $true = $true instanceof \Closure ? $true() : $true;
             $false = Arr::get($options, 'false', new Pipeline());
@@ -72,12 +75,12 @@ abstract class Matcher implements Pipeable
             $this->setData($inputData);
 
             return $this->matchAndRun(
-                function() use ($true, $inputData) {
-                    /** @var Pipeline $true */
+                function () use ($true, $inputData) {
+                    /* @var Pipeline $true */
                     return $true->flow($inputData);
                 },
-                function() use ($false, $inputData) {
-                    /** @var Pipeline $false */
+                function () use ($false, $inputData) {
+                    /* @var Pipeline $false */
                     return $false->flow($inputData);
                 }
             );

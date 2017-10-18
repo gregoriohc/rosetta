@@ -36,12 +36,12 @@ class HtmlElementsTest extends TestCase
             [
                 [
                     '@attributes' => ['class' => 'foo'],
-                    '_value' => 'foo'
+                    '_value'      => 'foo',
                 ],
                 [
                     '@attributes' => [],
-                    '_value' => 'bar'
-                ]
+                    '_value'      => 'bar',
+                ],
 
             ],
             $message->toArray()

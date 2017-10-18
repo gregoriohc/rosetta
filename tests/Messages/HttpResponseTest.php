@@ -55,8 +55,8 @@ class HttpResponseTest extends TestCase
         $httpResponse = new Response(200, ['foo' => 'bar'], 'response');
         $data = [
             'status_code' => $httpResponse->getStatusCode(),
-            'headers' => $httpResponse->getHeaders(),
-            'body' => (string) $httpResponse->getBody(),
+            'headers'     => $httpResponse->getHeaders(),
+            'body'        => (string) $httpResponse->getBody(),
         ];
         $message = Manager::message('HttpResponse', $httpResponse);
 
@@ -70,8 +70,8 @@ class HttpResponseTest extends TestCase
     {
         $data = [
             'status_code' => 200,
-            'headers' => [],
-            'body' => 'response',
+            'headers'     => [],
+            'body'        => 'response',
         ];
         $message = Manager::message('HttpResponse');
 

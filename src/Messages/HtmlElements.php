@@ -7,7 +7,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class HtmlElements extends Xml
 {
     /**
-     * Boot Transformer
+     * Boot Transformer.
      */
     protected function boot()
     {
@@ -31,10 +31,10 @@ class HtmlElements extends Xml
      */
     public function toArray()
     {
-        $crawler = new Crawler((string)$this->getData());
+        $crawler = new Crawler((string) $this->getData());
 
         return $crawler->filter($this->getConfig()['selector'])->each(function ($element) {
-            /** @var Crawler $element */
+            /* @var Crawler $element */
             return $this->domNodeToArray($element->getNode(0));
         });
     }

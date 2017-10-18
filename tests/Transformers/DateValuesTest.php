@@ -16,8 +16,8 @@ class DateValuesTest extends TestCase
     public function setUp()
     {
         $this->transformer = Manager::transformer('DateValues', [
-            'locale' => 'en_US',
-            'timezone' => 'UTC',
+            'locale'     => 'en_US',
+            'timezone'   => 'UTC',
             'properties' => ['date'],
         ]);
     }

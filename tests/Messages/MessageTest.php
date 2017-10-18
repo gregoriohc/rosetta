@@ -40,7 +40,6 @@ class MessageTest extends TestCase
 
 class TestMessage extends Message
 {
-
     /**
      * Get the instance as an array.
      *
@@ -53,6 +52,7 @@ class TestMessage extends Message
 
     /**
      * @param array $data
+     *
      * @return self
      */
     public function fromArray($data)

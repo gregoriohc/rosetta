@@ -7,7 +7,7 @@ use Illuminate\Config\Repository;
 trait Configurable
 {
     /**
-     * Configuration options
+     * Configuration options.
      *
      * @var Repository
      */
@@ -23,7 +23,8 @@ trait Configurable
 
     /**
      * @param array|string $config
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return Configurable
      */
     public function setConfig($config, $value = null)

@@ -5,7 +5,7 @@ namespace Ghc\Rosetta\Transformers;
 class SlugizeKeys extends Transformer
 {
     /**
-     * Boot Transformer
+     * Boot Transformer.
      */
     protected function boot()
     {
@@ -16,11 +16,12 @@ class SlugizeKeys extends Transformer
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function transform($data)
     {
-        return collect($data)->mapWithKeys(function($value, $key) {
+        return collect($data)->mapWithKeys(function ($value, $key) {
             return [str_replace('-', $this->config['separator'], str_slug($key)) => !is_array($value) ? $value : $this->transform($value)];
         })->toArray();
     }

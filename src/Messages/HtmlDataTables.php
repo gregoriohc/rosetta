@@ -9,16 +9,16 @@ use Symfony\Component\DomCrawler\Crawler;
 class HtmlDataTables extends Xml
 {
     /**
-     * Boot Transformer
+     * Boot Transformer.
      */
     protected function boot()
     {
         $this->addDefaultConfig([
-            'selector' => 'table',
-            'hasHeader' => true,
+            'selector'         => 'table',
+            'hasHeader'        => true,
             'useHeaderAsIndex' => true,
-            'ignoreHeader' => false,
-            'orientation' => 'vertical',
+            'ignoreHeader'     => false,
+            'orientation'      => 'vertical',
         ]);
     }
 
@@ -37,16 +37,17 @@ class HtmlDataTables extends Xml
      */
     public function toArray()
     {
-        $crawler = new Crawler((string)$this->getData());
+        $crawler = new Crawler((string) $this->getData());
 
         return $crawler->filter($this->getConfig()['selector'])->each(function ($table) {
             $rows = [];
+
             try {
                 /** @var Crawler $table */
                 $rows = $table->filter('tr')->each(function ($row) {
-                    /** @var Crawler $row */
+                    /* @var Crawler $row */
                     return $row->filter('th,td')->each(function ($column) {
-                        /** @var Crawler $column */
+                        /* @var Crawler $column */
                         return trim($column->text());
                     });
                 });

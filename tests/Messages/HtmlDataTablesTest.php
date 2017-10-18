@@ -37,11 +37,11 @@ class HtmlDataTablesTest extends TestCase
                 [
                     [
                         'Foo' => 'Woo',
-                        'Bar' => 'Car'
+                        'Bar' => 'Car',
                     ],
                     [
                         'Foo' => 'Boo',
-                        'Bar' => 'Tar'
+                        'Bar' => 'Tar',
                     ],
                 ],
 

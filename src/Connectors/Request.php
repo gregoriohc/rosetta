@@ -40,11 +40,12 @@ class Request implements Pipeable
 
     /**
      * Request constructor.
+     *
      * @param Connector $connector
-     * @param string $method
-     * @param string $uri
-     * @param mixed $data
-     * @param array $options
+     * @param string    $method
+     * @param string    $uri
+     * @param mixed     $data
+     * @param array     $options
      */
     public function __construct(Connector $connector, $method, $uri, $data = null, $options = [])
     {
@@ -65,11 +66,13 @@ class Request implements Pipeable
 
     /**
      * @param Connector $connector
+     *
      * @return Request
      */
     public function setConnector($connector)
     {
         $this->connector = $connector;
+
         return $this;
     }
 
@@ -83,11 +86,13 @@ class Request implements Pipeable
 
     /**
      * @param string $method
+     *
      * @return Request
      */
     public function setMethod($method)
     {
         $this->method = $method;
+
         return $this;
     }
 
@@ -101,11 +106,13 @@ class Request implements Pipeable
 
     /**
      * @param string $uri
+     *
      * @return Request
      */
     public function setUri($uri)
     {
         $this->uri = $uri;
+
         return $this;
     }
 
@@ -119,11 +126,13 @@ class Request implements Pipeable
 
     /**
      * @param mixed $data
+     *
      * @return Request
      */
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -137,11 +146,13 @@ class Request implements Pipeable
 
     /**
      * @param array $options
+     *
      * @return Request
      */
     public function setOptions($options)
     {
         $this->options = $options;
+
         return $this;
     }
 
@@ -174,11 +185,12 @@ class Request implements Pipeable
 
     /**
      * @param array $options
+     *
      * @return \Closure
      */
     public function pipe($options = [])
     {
-        return function($inputData) use ($options) {
+        return function ($inputData) use ($options) {
             if (!is_null($inputData)) {
                 $this->setData($inputData);
             }

@@ -32,7 +32,7 @@ class PregReplaceKeysTest extends TestCase
         $outputData = ['woo' => 'bar'];
 
         $this->transformer->setConfig([
-            'pattern' => '/foo/',
+            'pattern'     => '/foo/',
             'replacement' => 'woo',
         ]);
 

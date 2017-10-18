@@ -14,7 +14,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
     use Configurable;
 
     /**
-     * Message data
+     * Message data.
      *
      * @var mixed
      */
@@ -22,8 +22,9 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
 
     /**
      * Message constructor.
+     *
      * @param null|mixed $data
-     * @param array $config
+     * @param array      $config
      */
     public function __construct($data = null, $config = [])
     {
@@ -34,7 +35,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
     }
 
     /**
-     * Boot Transformer
+     * Boot Transformer.
      */
     protected function boot()
     {
@@ -45,7 +46,6 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
      */
     public function newData()
     {
-        return null;
     }
 
     /**
@@ -58,6 +58,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
 
     /**
      * @param mixed $data
+     *
      * @return self
      */
     public function setData($data)
@@ -73,7 +74,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
     public function serialize()
     {
         return serialize([
-            'data' => $this->toArray(),
+            'data'   => $this->toArray(),
             'config' => $this->getConfig(),
         ]);
     }
@@ -91,7 +92,7 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
     /**
      * @return array
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return $this->toArray();
     }
@@ -106,11 +107,12 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
 
     /**
      * @param array $options
+     *
      * @return \Closure
      */
     public function pipe($options = [])
     {
-        return function($inputData) use ($options) {
+        return function ($inputData) use ($options) {
             $fromArray = Arr::get($options, 'fromArray', true);
             if ($fromArray) {
                 $this->fromArray($inputData);
@@ -124,8 +126,8 @@ abstract class Message implements Arrayable, Serializable, JsonSerializable, Pip
 
     /**
      * @param array $data
+     *
      * @return self
      */
     abstract public function fromArray($data);
-
 }

@@ -8,6 +8,7 @@ class DataGetKey implements Pipeable
 {
     /**
      * @param array $options
+     *
      * @return \Closure
      */
     public function pipe($options = [])

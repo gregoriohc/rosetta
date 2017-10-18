@@ -16,9 +16,9 @@ class MoneyValuesTest extends TestCase
     public function setUp()
     {
         $this->transformer = Manager::transformer('MoneyValues', [
-            'locale' => 'en_US',
+            'locale'        => 'en_US',
             'currency_code' => 'USD',
-            'properties' => ['dollars'],
+            'properties'    => ['dollars'],
         ]);
     }
 
