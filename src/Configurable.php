@@ -22,12 +22,17 @@ trait Configurable
     }
 
     /**
-     * @param array $config
-     * @return self
+     * @param array|string $config
+     * @param mixed $value
+     * @return Configurable
      */
-    public function setConfig($config)
+    public function setConfig($config, $value = null)
     {
-        $this->config = new Repository($config);
+        if (is_string($config)) {
+            $this->config->set($config, $value);
+        } else {
+            $this->config = new Repository($config);
+        }
 
         return $this;
     }
