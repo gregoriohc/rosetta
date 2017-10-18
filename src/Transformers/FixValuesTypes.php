@@ -13,15 +13,17 @@ class FixValuesTypes extends Transformer
         return collect($data)->map(function($value) {
             if (is_numeric($value)) {
                 $value += 0;
-                if (is_double($value)) {
-                    return (double) $value;
-                } elseif (is_float($value)) {
+                if (is_float($value)) {
                     return (float) $value;
                 } elseif (is_int($value)) {
                     return (int) $value;
-                } elseif (is_bool($value)) {
-                    return (bool) $value;
                 }
+            } elseif ('true' == $value) {
+                return true;
+            } elseif ('false' == $value) {
+                return false;
+            } elseif (is_array($value)) {
+                return $this->transform($value);
             }
 
             return $value;
