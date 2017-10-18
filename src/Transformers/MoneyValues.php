@@ -19,13 +19,15 @@ class MoneyValues extends Transformer
      */
     protected function boot()
     {
+        $defaultLocale = 'en_US';
+        $numberFormatter = new \NumberFormatter($defaultLocale, \NumberFormatter::CURRENCY);
+
         $this->addDefaultConfig([
-            'locale' => setlocale(LC_ALL, 0),
-            'currency_code' => (new \NumberFormatter(setlocale(LC_ALL, 0), \NumberFormatter::CURRENCY))->getTextAttribute(\NumberFormatter::CURRENCY_CODE),
+            'locale' => $defaultLocale,
+            'currency_code' => $numberFormatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE),
         ]);
 
         $currencies = new ISOCurrencies();
-        $numberFormatter = new \NumberFormatter($this->config['locale'], \NumberFormatter::CURRENCY);
         $intlParser = new IntlMoneyParser($numberFormatter, $currencies);
         $decimalParser = new DecimalMoneyParser($currencies);
 
