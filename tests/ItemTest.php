@@ -12,7 +12,7 @@ class ItemTest extends TestCase
     {
         $this->assertInstanceOf(
             Item::class,
-            new Item([], [new Skip])
+            new Item([], [new Skip()])
         );
     }
 
@@ -56,7 +56,7 @@ class ItemTest extends TestCase
     public function testCanSetAndGetTransformers()
     {
         $item = new Item([]);
-        $transformer = new Skip;
+        $transformer = new Skip();
         $transformers = [$transformer];
 
         // Using transformers array

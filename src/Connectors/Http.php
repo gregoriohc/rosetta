@@ -8,24 +8,27 @@ use GuzzleHttp\Client;
 class Http extends Connector
 {
     /**
-     * HTTP client
+     * HTTP client.
      *
      * @var Client
      */
     protected $client;
 
     /**
-     * Boot Connector
+     * Boot Connector.
      */
     protected function boot()
     {
-        if (!$this->config->has('client')) $this->config->set('client', []);
+        if (!$this->config->has('client')) {
+            $this->config->set('client', []);
+        }
 
         $this->setClient(new Client($this->config->get('client')));
     }
 
     /**
      * @param Client $client
+     *
      * @return Http
      */
     public function setClient($client)
@@ -43,10 +46,10 @@ class Http extends Connector
         return $this->client;
     }
 
-
     /**
      * @param string $uri
-     * @param array $options
+     * @param array  $options
+     *
      * @return mixed
      */
     public function show($uri, $options = [])
@@ -55,47 +58,57 @@ class Http extends Connector
     }
 
     /**
-     * @param string $uri
+     * @param string     $uri
      * @param null|mixed $data
-     * @param array $options
+     * @param array      $options
+     *
      * @return mixed
      */
     public function create($uri, $data = null, $options = [])
     {
-        if ($data) $options['form_params'] = $data;
+        if ($data) {
+            $options['form_params'] = $data;
+        }
 
         return new HttpResponse($this->client->request('POST', $uri, $options));
     }
 
     /**
-     * @param string $uri
+     * @param string     $uri
      * @param null|mixed $data
-     * @param array $options
+     * @param array      $options
+     *
      * @return mixed
      */
     public function update($uri, $data = null, $options = [])
     {
-        if ($data) $options['form_params'] = $data;
+        if ($data) {
+            $options['form_params'] = $data;
+        }
 
         return new HttpResponse($this->client->request('PATCH', $uri, $options));
     }
 
     /**
-     * @param string $uri
+     * @param string     $uri
      * @param null|mixed $data
-     * @param array $options
+     * @param array      $options
+     *
      * @return mixed
      */
     public function replace($uri, $data = null, $options = [])
     {
-        if ($data) $options['form_params'] = $data;
+        if ($data) {
+            $options['form_params'] = $data;
+        }
 
         return new HttpResponse($this->client->request('PUT', $uri, $options));
     }
 
     /**
      * @param string $uri
-     * @param array $options
+     * @param array  $options
+     *
      * @return mixed
      */
     public function delete($uri, $options = [])

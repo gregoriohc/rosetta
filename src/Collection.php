@@ -13,7 +13,7 @@ class Collection extends Item implements Pipeable
      */
     public function toArray()
     {
-        return collect($this->getData())->map(function($itemData) {
+        return collect($this->getData())->map(function ($itemData) {
             return (new Item($itemData, $this->transformers))->toArray();
         })->toArray();
     }

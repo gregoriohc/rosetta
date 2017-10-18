@@ -26,13 +26,14 @@ class HttpResponse extends Message
     {
         return [
             'status_code' => $this->getData()->getStatusCode(),
-            'headers' => $this->getData()->getHeaders(),
-            'body' => $this->getData()->getBody(),
+            'headers'     => $this->getData()->getHeaders(),
+            'body'        => $this->getData()->getBody(),
         ];
     }
 
     /**
      * @param array $data
+     *
      * @return self
      */
     public function fromArray($data)

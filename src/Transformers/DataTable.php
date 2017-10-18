@@ -7,26 +7,27 @@ use Ghc\Rosetta\Item;
 class DataTable extends Transformer
 {
     /**
-     * Boot Transformer
+     * Boot Transformer.
      */
     protected function boot()
     {
         $this->addDefaultConfig([
-            'hasHeader' => true,
+            'hasHeader'        => true,
             'useHeaderAsIndex' => true,
-            'ignoreHeader' => false,
-            'orientation' => 'vertical',
+            'ignoreHeader'     => false,
+            'orientation'      => 'vertical',
         ]);
     }
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function transform($data)
     {
         if ('horizontal' == $this->config['orientation']) {
-            $data = (new Item($data, [new TransposeValues]))->toArray();
+            $data = (new Item($data, [new TransposeValues()]))->toArray();
         }
 
         if ($this->config['hasHeader']) {

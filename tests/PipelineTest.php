@@ -8,7 +8,6 @@ use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Item;
 use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Matchers\DataIsArray;
-use Ghc\Rosetta\Messages\HttpResponse;
 use Ghc\Rosetta\Messages\PhpArray;
 use Ghc\Rosetta\Pipeline;
 use Ghc\Rosetta\Pipes\DataGetKey;
@@ -40,7 +39,8 @@ class PipelineTest extends TestCase
     {
         $this->assertInstanceOf(
             Pipeline::class,
-            (new Pipeline())->pushPipe(function() {})
+            (new Pipeline())->pushPipe(function () {
+            })
         );
     }
 
@@ -64,8 +64,9 @@ class PipelineTest extends TestCase
     {
         $pipeline = new Pipeline();
         $pipeline->pushPipe(new DataGetKey(), ['key' => 'foo']);
-        $pipeline->pushPipe(function($inputData) {
+        $pipeline->pushPipe(function ($inputData) {
             $inputData['bar'] = 456;
+
             return $inputData;
         });
 

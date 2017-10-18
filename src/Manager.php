@@ -12,14 +12,16 @@ class Manager
 {
     /**
      * @param string $class
-     * @param array $config
-     * @return Connector
+     * @param array  $config
+     *
      * @throws ManagerException
+     *
+     * @return Connector
      */
     public static function connector($class, $config = [])
     {
         if (!str_contains($class, '\\')) {
-            $class = '\\Ghc\\Rosetta\\Connectors\\' . studly_case($class);
+            $class = '\\Ghc\\Rosetta\\Connectors\\'.studly_case($class);
         }
 
         if (!class_exists($class)) {
@@ -30,11 +32,12 @@ class Manager
     }
 
     /**
-     * @param Connector $connector
-     * @param string $method
-     * @param string $uri
+     * @param Connector  $connector
+     * @param string     $method
+     * @param string     $uri
      * @param mixed|null $data
-     * @param array $options
+     * @param array      $options
+     *
      * @return Request
      */
     public static function connectorRequest(Connector $connector, $method, $uri, $data = null, $options = [])
@@ -43,16 +46,18 @@ class Manager
     }
 
     /**
-     * @param string $class
+     * @param string     $class
      * @param null|mixed $data
-     * @param array $config
-     * @return Message
+     * @param array      $config
+     *
      * @throws ManagerException
+     *
+     * @return Message
      */
     public static function message($class, $data = null, $config = [])
     {
         if (!str_contains($class, '\\')) {
-            $class = '\\Ghc\\Rosetta\\Messages\\' . studly_case($class);
+            $class = '\\Ghc\\Rosetta\\Messages\\'.studly_case($class);
         }
 
         if (!class_exists($class)) {
@@ -64,14 +69,16 @@ class Manager
 
     /**
      * @param string $class
-     * @param array $config
-     * @return Message
+     * @param array  $config
+     *
      * @throws ManagerException
+     *
+     * @return Message
      */
     public static function transformer($class, $config = [])
     {
         if (!str_contains($class, '\\')) {
-            $class = '\\Ghc\\Rosetta\\Transformers\\' . studly_case($class);
+            $class = '\\Ghc\\Rosetta\\Transformers\\'.studly_case($class);
         }
 
         if (!class_exists($class)) {
@@ -82,8 +89,9 @@ class Manager
     }
 
     /**
-     * @param array|mixed $data
+     * @param array|mixed               $data
      * @param Transformer|Transformer[] $transformers
+     *
      * @return Item
      */
     public static function item($data, $transformers = null)
@@ -92,8 +100,9 @@ class Manager
     }
 
     /**
-     * @param array|mixed $data
+     * @param array|mixed               $data
      * @param Transformer|Transformer[] $transformers
+     *
      * @return Item
      */
     public static function collection($data, $transformers = null)
@@ -103,13 +112,15 @@ class Manager
 
     /**
      * @param string $class
-     * @return
+     *
      * @throws ManagerException
+     *
+     * @return
      */
     public static function pipe($class)
     {
         if (!str_contains($class, '\\')) {
-            $class = '\\Ghc\\Rosetta\\Pipes\\' . studly_case($class);
+            $class = '\\Ghc\\Rosetta\\Pipes\\'.studly_case($class);
         }
 
         if (!class_exists($class)) {
@@ -120,16 +131,18 @@ class Manager
     }
 
     /**
-     * @param string $class
+     * @param string     $class
      * @param null|mixed $data
-     * @param array $config
-     * @return
+     * @param array      $config
+     *
      * @throws ManagerException
+     *
+     * @return
      */
     public static function matcher($class, $data = null, $config = [])
     {
         if (!str_contains($class, '\\')) {
-            $class = '\\Ghc\\Rosetta\\Matchers\\' . studly_case($class);
+            $class = '\\Ghc\\Rosetta\\Matchers\\'.studly_case($class);
         }
 
         if (!class_exists($class)) {
@@ -141,6 +154,7 @@ class Manager
 
     /**
      * @param array $config
+     *
      * @return Pipeline
      */
     public static function pipeline($config = [])
@@ -151,6 +165,7 @@ class Manager
     /**
      * @param Message $input
      * @param Message $output
+     *
      * @return Message
      */
     public static function transformMessage($input, $output)

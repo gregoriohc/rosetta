@@ -32,6 +32,7 @@ class Xml extends Message
 
     /**
      * @param array $data
+     *
      * @return self
      */
     public function fromArray($data)
@@ -41,11 +42,12 @@ class Xml extends Message
 
     /**
      * @param DomNode $root
+     *
      * @return array
      */
     protected function domNodeToArray($root)
     {
-        $result = array();
+        $result = [];
 
         if ($root->hasAttributes()) {
             $attrs = $root->attributes;
@@ -62,16 +64,17 @@ class Xml extends Message
                 $child = $children->item(0);
                 if ($child->nodeType == XML_TEXT_NODE) {
                     $result['_value'] = $child->nodeValue;
+
                     return $result;
                 }
             }
-            $groups = array();
+            $groups = [];
             foreach ($children as $child) {
                 if (!isset($result[$child->nodeName])) {
                     $result[$child->nodeName] = $this->domNodeToArray($child);
                 } else {
                     if (!isset($groups[$child->nodeName])) {
-                        $result[$child->nodeName] = array($result[$child->nodeName]);
+                        $result[$child->nodeName] = [$result[$child->nodeName]];
                         $groups[$child->nodeName] = 1;
                     }
                     $result[$child->nodeName][] = $this->domNodeToArray($child);

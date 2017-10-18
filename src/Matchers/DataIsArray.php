@@ -5,7 +5,7 @@ namespace Ghc\Rosetta\Matchers;
 class DataIsArray extends Matcher
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function match()
     {

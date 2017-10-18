@@ -21,7 +21,8 @@ class Item implements Arrayable, Pipeable
 
     /**
      * Item constructor.
-     * @param array|mixed $data
+     *
+     * @param array|mixed               $data
      * @param Transformer|Transformer[] $transformers
      */
     public function __construct($data = [], $transformers = null)
@@ -40,6 +41,7 @@ class Item implements Arrayable, Pipeable
 
     /**
      * @param array|mixed $data
+     *
      * @return self
      */
     public function setData($data)
@@ -59,11 +61,12 @@ class Item implements Arrayable, Pipeable
 
     /**
      * @param Transformers\Transformer|Transformers\Transformer[] $transformers
+     *
      * @return self
      */
     public function setTransformers($transformers)
     {
-        $transformers = $transformers ?: new Skip;
+        $transformers = $transformers ?: new Skip();
         $this->transformers = is_array($transformers) ? $transformers : [$transformers];
 
         return $this;
@@ -87,12 +90,14 @@ class Item implements Arrayable, Pipeable
 
     /**
      * @param array $options
+     *
      * @return \Closure
      */
     public function pipe($options = [])
     {
-        return function($inputData) use ($options) {
+        return function ($inputData) use ($options) {
             $this->setData($inputData);
+
             return $this->toArray();
         };
     }

@@ -24,6 +24,7 @@ class PhpObject extends Message
 
     /**
      * @param array $data
+     *
      * @return self
      */
     public function fromArray($data)

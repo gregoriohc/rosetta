@@ -6,11 +6,12 @@ class FixValuesTypes extends Transformer
 {
     /**
      * @param array $data
+     *
      * @return array
      */
     public function transform($data)
     {
-        return collect($data)->map(function($value) {
+        return collect($data)->map(function ($value) {
             if (is_numeric($value)) {
                 $value += 0;
                 if (is_float($value)) {

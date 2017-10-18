@@ -29,20 +29,20 @@ class FixValuesTypesTest extends TestCase
     public function testCanTransform()
     {
         $inputData = [
-            'double' => '1.23',
+            'double'  => '1.23',
             'integer' => '1',
-            'true' => 'true',
-            'false' => 'false',
-            'array' => [],
-            'foo' => 'bar',
+            'true'    => 'true',
+            'false'   => 'false',
+            'array'   => [],
+            'foo'     => 'bar',
         ];
         $outputData = [
-            'double' => 1.23,
+            'double'  => 1.23,
             'integer' => 1,
-            'true' => true,
-            'false' => false,
-            'array' => [],
-            'foo' => 'bar',
+            'true'    => true,
+            'false'   => false,
+            'array'   => [],
+            'foo'     => 'bar',
         ];
 
         $this->assertEquals(

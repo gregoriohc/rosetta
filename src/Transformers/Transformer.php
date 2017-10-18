@@ -10,6 +10,7 @@ abstract class Transformer
 
     /**
      * Connector constructor.
+     *
      * @param array $config
      */
     public function __construct($config = [])
@@ -24,7 +25,7 @@ abstract class Transformer
     }
 
     /**
-     * Boot Transformer
+     * Boot Transformer.
      */
     protected function boot()
     {
@@ -32,6 +33,7 @@ abstract class Transformer
 
     /**
      * @param array $data
+     *
      * @return array
      */
     abstract public function transform($data);

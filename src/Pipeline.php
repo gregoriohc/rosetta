@@ -15,6 +15,7 @@ class Pipeline
 
     /**
      * Pipeline constructor.
+     *
      * @param array $config
      */
     public function __construct($config = [])

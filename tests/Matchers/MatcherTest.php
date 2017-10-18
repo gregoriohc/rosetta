@@ -45,9 +45,9 @@ class MatcherTest extends TestCase
 
         $this->assertEquals(
             'foo',
-            $matcher->matchAndRun(function() {
+            $matcher->matchAndRun(function () {
                 return 'foo';
-            }, function() {
+            }, function () {
                 return 'bar';
             })
         );
@@ -56,9 +56,9 @@ class MatcherTest extends TestCase
 
         $this->assertEquals(
             'bar',
-            $matcher->matchAndRun(function() {
+            $matcher->matchAndRun(function () {
                 return 'foo';
-            }, function() {
+            }, function () {
                 return 'bar';
             })
         );
@@ -68,10 +68,10 @@ class MatcherTest extends TestCase
 class TestMatcher extends Matcher
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function match()
     {
-        return (boolean) $this->getData();
+        return (bool) $this->getData();
     }
 }
