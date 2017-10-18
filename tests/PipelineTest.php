@@ -9,6 +9,7 @@ use Ghc\Rosetta\Item;
 use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\HttpResponse;
+use Ghc\Rosetta\Messages\PhpArray;
 use Ghc\Rosetta\Pipeline;
 use Ghc\Rosetta\Pipes\DataGetKey;
 use GuzzleHttp\Client;
@@ -126,6 +127,18 @@ class PipelineTest extends TestCase
         $this->assertEquals(
             '',
             $pipeline->flow('')
+        );
+    }
+
+    public function testCanFlowWithMessage()
+    {
+        $pipeline = new Pipeline();
+        $pipeline->pushPipe(new PhpArray());
+        $pipeline->pushPipe(new PhpArray(), ['fromArray' => false]);
+
+        $this->assertEquals(
+            [],
+            $pipeline->flow([])
         );
     }
 }
