@@ -79,9 +79,7 @@ class Item implements Arrayable, Pipeable
         $data = $this->getData();
 
         foreach ($this->transformers as $transformer) {
-            $data =
-                $transformer->transform($data) +
-                $transformer->processRelations($data);
+            $data = $transformer->transform($data);
         }
 
         return $data;

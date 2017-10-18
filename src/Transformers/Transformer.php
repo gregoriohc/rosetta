@@ -9,11 +9,6 @@ abstract class Transformer
     use Configurable;
 
     /**
-     * @var array
-     */
-    protected $relations = [];
-
-    /**
      * Connector constructor.
      * @param array $config
      */
@@ -33,22 +28,6 @@ abstract class Transformer
      */
     protected function boot()
     {
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function processRelations($data)
-    {
-        $relationsData = [];
-
-        foreach ($this->relations as $relation) {
-            $relationMethod = 'relation' . ucfirst($relation);
-            $relationsData[$relation] = call_user_func_array([$this, $relationMethod], [$data]);
-        }
-
-        return $relationsData;
     }
 
     /**
