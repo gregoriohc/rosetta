@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Connectors;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use PHPUnit\Framework\TestCase;
 
@@ -12,14 +12,14 @@ class DataIsArrayTest extends TestCase
     {
         $this->assertInstanceOf(
             DataIsArray::class,
-            Manager::matcher(DataIsArray::class)
+            Rosetta::matcher(DataIsArray::class)
         );
     }
 
     public function testCanMatch()
     {
         /** @var DataIsArray $matcher */
-        $matcher = Manager::matcher(DataIsArray::class, []);
+        $matcher = Rosetta::matcher(DataIsArray::class, []);
 
         $this->assertEquals(
             true,

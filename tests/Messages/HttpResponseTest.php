@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HttpResponse;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -13,14 +13,14 @@ class HttpResponseTest extends TestCase
     {
         $this->assertInstanceOf(
             HttpResponse::class,
-            Manager::message('HttpResponse')
+            Rosetta::message('HttpResponse')
         );
     }
 
     public function testCanBeCreatedWithData()
     {
         $httpResponse = new Response();
-        $message = Manager::message('HttpResponse', $httpResponse);
+        $message = Rosetta::message('HttpResponse', $httpResponse);
 
         $this->assertInstanceOf(
             HttpResponse::class,
@@ -32,7 +32,7 @@ class HttpResponseTest extends TestCase
     {
         $httpResponse = new Response();
         $config = ['foo' => 'bar'];
-        $message = Manager::message('HttpResponse', $httpResponse, $config);
+        $message = Rosetta::message('HttpResponse', $httpResponse, $config);
 
         $this->assertInstanceOf(
             HttpResponse::class,
@@ -58,7 +58,7 @@ class HttpResponseTest extends TestCase
             'headers'     => $httpResponse->getHeaders(),
             'body'        => (string) $httpResponse->getBody(),
         ];
-        $message = Manager::message('HttpResponse', $httpResponse);
+        $message = Rosetta::message('HttpResponse', $httpResponse);
 
         $this->assertEquals(
             $data,
@@ -73,7 +73,7 @@ class HttpResponseTest extends TestCase
             'headers'     => [],
             'body'        => 'response',
         ];
-        $message = Manager::message('HttpResponse');
+        $message = Rosetta::message('HttpResponse');
 
         $this->assertInstanceOf(
             HttpResponse::class,
@@ -89,7 +89,7 @@ class HttpResponseTest extends TestCase
     public function testCanToString()
     {
         $httpResponse = new Response();
-        $message = Manager::message('HttpResponse', $httpResponse);
+        $message = Rosetta::message('HttpResponse', $httpResponse);
 
         $this->assertEquals(
             '',

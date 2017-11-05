@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\PregReplaceKeys;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +15,14 @@ class PregReplaceKeysTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('PregReplaceKeys');
+        $this->transformer = Rosetta::transformer('PregReplaceKeys');
     }
 
     public function testCanBeCreated()
     {
         $this->assertInstanceOf(
             PregReplaceKeys::class,
-            Manager::transformer('PregReplaceKeys')
+            Rosetta::transformer('PregReplaceKeys')
         );
     }
 

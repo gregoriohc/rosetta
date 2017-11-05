@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\PhpArray;
 use PHPUnit\Framework\TestCase;
 
@@ -12,14 +12,14 @@ class PhpArrayTest extends TestCase
     {
         $this->assertInstanceOf(
             PhpArray::class,
-            Manager::message('PhpArray')
+            Rosetta::message('PhpArray')
         );
     }
 
     public function testCanBeCreatedWithData()
     {
         $array = ['foo' => 'bar'];
-        $message = Manager::message('PhpArray', $array);
+        $message = Rosetta::message('PhpArray', $array);
 
         $this->assertInstanceOf(
             PhpArray::class,
@@ -31,7 +31,7 @@ class PhpArrayTest extends TestCase
     {
         $array = ['foo' => 'bar'];
         $config = ['foo' => 'bar'];
-        $message = Manager::message('PhpArray', $array, $config);
+        $message = Rosetta::message('PhpArray', $array, $config);
 
         $this->assertInstanceOf(
             PhpArray::class,
@@ -52,7 +52,7 @@ class PhpArrayTest extends TestCase
     public function testCanToArray()
     {
         $array = ['foo' => 'bar'];
-        $message = Manager::message('PhpArray', $array);
+        $message = Rosetta::message('PhpArray', $array);
 
         $this->assertEquals(
             $array,
@@ -63,7 +63,7 @@ class PhpArrayTest extends TestCase
     public function testCanFromArray()
     {
         $array = ['foo' => 'bar'];
-        $message = Manager::message('PhpArray', []);
+        $message = Rosetta::message('PhpArray', []);
 
         $this->assertInstanceOf(
             PhpArray::class,
@@ -79,7 +79,7 @@ class PhpArrayTest extends TestCase
     public function testCanToString()
     {
         $array = ['foo' => 'bar'];
-        $message = Manager::message('PhpArray', $array);
+        $message = Rosetta::message('PhpArray', $array);
 
         $this->assertEquals(
             serialize($array),

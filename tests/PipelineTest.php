@@ -6,7 +6,7 @@ use Ghc\Rosetta\Collection;
 use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Item;
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\PhpArray;
 use Ghc\Rosetta\Pipeline;
@@ -104,7 +104,7 @@ class PipelineTest extends TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
         /** @var Http $http */
-        $http = Manager::connector(Http::class);
+        $http = Rosetta::connector(Http::class);
         $http->setClient($client);
         $pipeline = new Pipeline();
         $pipeline->pushPipe(new Request($http, 'show', 'http://example.com'));

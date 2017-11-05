@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\SlugizeKeys;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +15,14 @@ class SlugizeKeysTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('SlugizeKeys');
+        $this->transformer = Rosetta::transformer('SlugizeKeys');
     }
 
     public function testCanBeCreated()
     {
         $this->assertInstanceOf(
             SlugizeKeys::class,
-            Manager::transformer('SlugizeKeys')
+            Rosetta::transformer('SlugizeKeys')
         );
     }
 

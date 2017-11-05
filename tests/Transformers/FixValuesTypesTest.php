@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\FixValuesTypes;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +15,14 @@ class FixValuesTypesTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('FixValuesTypes');
+        $this->transformer = Rosetta::transformer('FixValuesTypes');
     }
 
     public function testCanBeCreated()
     {
         $this->assertInstanceOf(
             FixValuesTypes::class,
-            Manager::transformer('FixValuesTypes')
+            Rosetta::transformer('FixValuesTypes')
         );
     }
 

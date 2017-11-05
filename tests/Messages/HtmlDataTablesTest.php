@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HtmlDataTables;
 use PHPUnit\Framework\TestCase;
 
@@ -12,14 +12,14 @@ class HtmlDataTablesTest extends TestCase
     {
         $this->assertInstanceOf(
             HtmlDataTables::class,
-            Manager::message('HtmlDataTables')
+            Rosetta::message('HtmlDataTables')
         );
     }
 
     public function testCanBeCreatedWithData()
     {
         $html = '<html><table><tr><th>Foo</th><th>Bar</th></tr><tr><td>Woo</td><td>Car</td></tr><tr><td>Boo</td><td>Tar</td></tr></table></html>';
-        $message = Manager::message('HtmlDataTables', $html);
+        $message = Rosetta::message('HtmlDataTables', $html);
 
         $this->assertInstanceOf(
             HtmlDataTables::class,
@@ -30,7 +30,7 @@ class HtmlDataTablesTest extends TestCase
     public function testCanToArray()
     {
         $html = '<html><table><tr><th>Foo</th><th>Bar</th></tr><tr><td>Woo</td><td>Car</td></tr><tr><td>Boo</td><td>Tar</td></tr></table></html>';
-        $message = Manager::message('HtmlDataTables', $html, []);
+        $message = Rosetta::message('HtmlDataTables', $html, []);
 
         $this->assertEquals(
             [

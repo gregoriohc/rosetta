@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\Json;
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +12,7 @@ class JsonTest extends TestCase
     {
         $this->assertInstanceOf(
             Json::class,
-            Manager::message('Json')
+            Rosetta::message('Json')
         );
     }
 
@@ -20,7 +20,7 @@ class JsonTest extends TestCase
     {
         $data = ['foo' => 'bar'];
         $json = json_encode($data);
-        $message = Manager::message('Json', $json);
+        $message = Rosetta::message('Json', $json);
 
         $this->assertInstanceOf(
             Json::class,
@@ -33,7 +33,7 @@ class JsonTest extends TestCase
         $data = ['foo' => 'bar'];
         $json = json_encode($data);
         $config = ['foo' => 'bar'];
-        $message = Manager::message('Json', $json, $config);
+        $message = Rosetta::message('Json', $json, $config);
 
         $this->assertInstanceOf(
             Json::class,
@@ -55,7 +55,7 @@ class JsonTest extends TestCase
     {
         $data = ['foo' => 'bar'];
         $json = json_encode($data);
-        $message = Manager::message('Json', $json);
+        $message = Rosetta::message('Json', $json);
 
         $this->assertEquals(
             $data,
@@ -66,7 +66,7 @@ class JsonTest extends TestCase
     public function testCanFromArray()
     {
         $data = ['foo' => 'bar'];
-        $message = Manager::message('Json');
+        $message = Rosetta::message('Json');
 
         $this->assertInstanceOf(
             Json::class,
@@ -83,7 +83,7 @@ class JsonTest extends TestCase
     {
         $data = ['foo' => 'bar'];
         $json = json_encode($data);
-        $message = Manager::message('Json', $json);
+        $message = Rosetta::message('Json', $json);
 
         $this->assertEquals(
             $json,

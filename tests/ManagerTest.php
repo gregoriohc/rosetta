@@ -7,7 +7,7 @@ use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Item;
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\Html;
 use Ghc\Rosetta\Pipeline;
@@ -15,13 +15,13 @@ use Ghc\Rosetta\Pipes\DataGetKey;
 use Ghc\Rosetta\Transformers\Skip;
 use PHPUnit\Framework\TestCase;
 
-class ManagerTest extends TestCase
+class RosettaTest extends TestCase
 {
     public function testCanCreateConnectorFromShortName()
     {
         $this->assertInstanceOf(
             Http::class,
-            Manager::connector('Http')
+            Rosetta::connector('Http')
         );
     }
 
@@ -29,14 +29,14 @@ class ManagerTest extends TestCase
     {
         $this->expectException(ManagerException::class);
 
-        Manager::connector('Wrong');
+        Rosetta::connector('Wrong');
     }
 
     public function testCanCreateConnectorFromClassName()
     {
         $this->assertInstanceOf(
             Http::class,
-            Manager::connector(Http::class)
+            Rosetta::connector(Http::class)
         );
     }
 
@@ -44,7 +44,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             Html::class,
-            Manager::message('Html')
+            Rosetta::message('Html')
         );
     }
 
@@ -52,14 +52,14 @@ class ManagerTest extends TestCase
     {
         $this->expectException(ManagerException::class);
 
-        Manager::message('Wrong');
+        Rosetta::message('Wrong');
     }
 
     public function testCanCreateMessageFromClassName()
     {
         $this->assertInstanceOf(
             Html::class,
-            Manager::message(Html::class)
+            Rosetta::message(Html::class)
         );
     }
 
@@ -67,7 +67,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             Skip::class,
-            Manager::transformer('Skip')
+            Rosetta::transformer('Skip')
         );
     }
 
@@ -75,14 +75,14 @@ class ManagerTest extends TestCase
     {
         $this->expectException(ManagerException::class);
 
-        Manager::transformer('Wrong');
+        Rosetta::transformer('Wrong');
     }
 
     public function testCanCreateTransformerFromClassName()
     {
         $this->assertInstanceOf(
             Skip::class,
-            Manager::transformer(Skip::class)
+            Rosetta::transformer(Skip::class)
         );
     }
 
@@ -90,7 +90,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             DataGetKey::class,
-            Manager::pipe('DataGetKey')
+            Rosetta::pipe('DataGetKey')
         );
     }
 
@@ -98,14 +98,14 @@ class ManagerTest extends TestCase
     {
         $this->expectException(ManagerException::class);
 
-        Manager::pipe('Wrong');
+        Rosetta::pipe('Wrong');
     }
 
     public function testCanCreatePipeFromClassName()
     {
         $this->assertInstanceOf(
             DataGetKey::class,
-            Manager::pipe(DataGetKey::class)
+            Rosetta::pipe(DataGetKey::class)
         );
     }
 
@@ -113,7 +113,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             DataIsArray::class,
-            Manager::matcher('DataIsArray')
+            Rosetta::matcher('DataIsArray')
         );
     }
 
@@ -121,14 +121,14 @@ class ManagerTest extends TestCase
     {
         $this->expectException(ManagerException::class);
 
-        Manager::matcher('Wrong');
+        Rosetta::matcher('Wrong');
     }
 
     public function testCanCreateMatcherFromClassName()
     {
         $this->assertInstanceOf(
             DataIsArray::class,
-            Manager::matcher(DataIsArray::class)
+            Rosetta::matcher(DataIsArray::class)
         );
     }
 
@@ -137,7 +137,7 @@ class ManagerTest extends TestCase
         $inputMessage = new Html();
         $outputMessage = new Html();
 
-        Manager::transformMessage($inputMessage, $outputMessage);
+        Rosetta::transformMessage($inputMessage, $outputMessage);
 
         $this->assertEquals(
             $inputMessage->toArray(),
@@ -149,7 +149,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             Item::class,
-            Manager::item([])
+            Rosetta::item([])
         );
     }
 
@@ -157,7 +157,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             Collection::class,
-            Manager::collection([])
+            Rosetta::collection([])
         );
     }
 
@@ -165,7 +165,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             Pipeline::class,
-            Manager::pipeline([])
+            Rosetta::pipeline([])
         );
     }
 
@@ -173,7 +173,7 @@ class ManagerTest extends TestCase
     {
         $this->assertInstanceOf(
             Request::class,
-            Manager::connectorRequest(Manager::connector('Http'), 'show', 'http://example.com')
+            Rosetta::connectorRequest(Rosetta::connector('Http'), 'show', 'http://example.com')
         );
     }
 }
