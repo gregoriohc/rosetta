@@ -8,7 +8,7 @@ use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Messages\Message;
 use Ghc\Rosetta\Transformers\Transformer;
 
-class Manager
+class Rosetta
 {
     /**
      * @param string $class
