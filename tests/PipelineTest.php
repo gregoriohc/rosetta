@@ -6,6 +6,8 @@ use Ghc\Rosetta\Collection;
 use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Item;
+use Ghc\Rosetta\Pipes\DataMerge;
+use Ghc\Rosetta\Pipes\DataSetKey;
 use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\PhpArray;
@@ -66,12 +68,13 @@ class PipelineTest extends TestCase
         $pipeline->pushPipe(new DataGetKey(), ['key' => 'foo']);
         $pipeline->pushPipe(function ($inputData) {
             $inputData['bar'] = 456;
-
             return $inputData;
         });
+        $pipeline->pushPipe(new DataSetKey(), ['key' => 'pim', 'value' => 'pum']);
+        $pipeline->pushPipe(new DataMerge(), ['data' => ['pim' => 'pom', 'foo' => 'bar']]);
 
         $this->assertEquals(
-            ['bar' => 456],
+            ['bar' => 456, 'pim' => 'pom', 'foo' => 'bar'],
             $pipeline->flow(['foo' => ['bar' => 123]])
         );
     }
