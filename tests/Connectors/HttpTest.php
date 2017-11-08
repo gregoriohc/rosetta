@@ -3,8 +3,8 @@
 namespace Tests\Ghc\Rosetta\Connectors;
 
 use Ghc\Rosetta\Connectors\Http;
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HttpResponse;
+use Ghc\Rosetta\Rosetta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -134,9 +134,9 @@ class HttpTest extends TestCase
         $http = Rosetta::connector(Http::class);
 
         $http->setAuth([
-            'type' => Http::AUTH_BASIC,
+            'type'     => Http::AUTH_BASIC,
             'username' => 'user',
-            'password' => 'passwd'
+            'password' => 'passwd',
         ]);
 
         $this->assertEquals(
@@ -151,9 +151,9 @@ class HttpTest extends TestCase
         $http = Rosetta::connector(Http::class);
 
         $http->setAuth([
-            'type' => Http::AUTH_DIGEST,
+            'type'     => Http::AUTH_DIGEST,
             'username' => 'user',
-            'password' => 'passwd'
+            'password' => 'passwd',
         ]);
 
         $this->assertEquals(
@@ -168,11 +168,11 @@ class HttpTest extends TestCase
         $http = Rosetta::connector(Http::class);
 
         $http->setAuth([
-            'type' => Http::AUTH_OAUTH1,
-            'consumer_key' => 'key',
+            'type'            => Http::AUTH_OAUTH1,
+            'consumer_key'    => 'key',
             'consumer_secret' => 'secret',
-            'token' => 'accesskey',
-            'token_secret' => 'accesssecret'
+            'token'           => 'accesskey',
+            'token_secret'    => 'accesssecret',
         ]);
 
         $this->assertArraySubset(
@@ -187,13 +187,13 @@ class HttpTest extends TestCase
         $http = Rosetta::connector(Http::class);
 
         $http->setAuth([
-            'type' => Http::AUTH_OAUTH2,
-            'uri' => 'http://example.com/access_token',
-            'grant_type' => 'password_credentials',
-            'client_id' => 'id',
+            'type'          => Http::AUTH_OAUTH2,
+            'uri'           => 'http://example.com/access_token',
+            'grant_type'    => 'password_credentials',
+            'client_id'     => 'id',
             'client_secret' => 'secret',
-            'username' => 'user',
-            'password' => 'passwd',
+            'username'      => 'user',
+            'password'      => 'passwd',
         ]);
 
         $this->assertArraySubset(
@@ -208,8 +208,8 @@ class HttpTest extends TestCase
         $http = Rosetta::connector(Http::class);
 
         $http->setAuth([
-            'type' => Http::AUTH_COOKIE,
-            'uri' => 'http://example.com/login',
+            'type'   => Http::AUTH_COOKIE,
+            'uri'    => 'http://example.com/login',
             'fields' => [
                 'username' => 'user',
                 'password' => 'passwd',
@@ -228,9 +228,9 @@ class HttpTest extends TestCase
         $http = Rosetta::connector(Http::class);
 
         $http->setAuth([
-            'type' => Http::AUTH_CUSTOM,
+            'type'    => Http::AUTH_CUSTOM,
             'handler' => null,
-            'auth' => 'test',
+            'auth'    => 'test',
         ]);
 
         $this->assertArraySubset(
@@ -242,9 +242,9 @@ class HttpTest extends TestCase
     public function testCanSetAuthOnCreate()
     {
         $authConfig = [
-            'type' => Http::AUTH_BASIC,
+            'type'     => Http::AUTH_BASIC,
             'username' => 'user',
-            'password' => 'passwd'
+            'password' => 'passwd',
         ];
 
         /** @var Http $http */

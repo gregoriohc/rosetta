@@ -2,8 +2,8 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HtmlDataTables;
+use Ghc\Rosetta\Rosetta;
 use PHPUnit\Framework\TestCase;
 
 class HtmlDataTablesTest extends TestCase

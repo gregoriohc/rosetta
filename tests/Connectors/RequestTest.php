@@ -4,8 +4,8 @@ namespace Tests\Ghc\Rosetta\Connectors;
 
 use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HttpResponse;
+use Ghc\Rosetta\Rosetta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;

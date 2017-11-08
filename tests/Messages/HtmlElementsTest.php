@@ -2,8 +2,8 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HtmlElements;
+use Ghc\Rosetta\Rosetta;
 use PHPUnit\Framework\TestCase;
 
 class HtmlElementsTest extends TestCase
