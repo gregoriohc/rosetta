@@ -2,8 +2,8 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Messages\HttpResponse;
+use Ghc\Rosetta\Rosetta;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 

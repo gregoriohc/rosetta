@@ -7,15 +7,15 @@ use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Exceptions\ManagerException;
 use Ghc\Rosetta\Item;
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\Html;
 use Ghc\Rosetta\Pipeline;
 use Ghc\Rosetta\Pipes\DataGetKey;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\Skip;
 use PHPUnit\Framework\TestCase;
 
-class RosettaTest extends TestCase
+class ManagerTest extends TestCase
 {
     public function testCanCreateConnectorFromShortName()
     {

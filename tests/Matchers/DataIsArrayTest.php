@@ -2,8 +2,8 @@
 
 namespace Tests\Ghc\Rosetta\Connectors;
 
-use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Matchers\DataIsArray;
+use Ghc\Rosetta\Rosetta;
 use PHPUnit\Framework\TestCase;
 
 class DataIsArrayTest extends TestCase
