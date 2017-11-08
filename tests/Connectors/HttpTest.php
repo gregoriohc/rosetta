@@ -266,7 +266,7 @@ class HttpTest extends TestCase
         );
 
         $http->setAuth([
-            'type'    => 'wrong',
+            'type' => 'wrong',
         ]);
     }
 
