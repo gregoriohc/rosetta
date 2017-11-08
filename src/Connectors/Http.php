@@ -112,7 +112,9 @@ class Http extends Connector
 
     /**
      * @param array $config
+     *
      * @throws Exception
+     *
      * @uses  getClientConfigAuthBasic
      * @uses  getClientConfigAuthDigest
      * @uses  getClientConfigAuthNtlm
@@ -126,7 +128,7 @@ class Http extends Connector
         $type = $config['type'];
         unset($config['type']);
 
-        $method = 'getClientConfigAuth' . ucfirst($type);
+        $method = 'getClientConfigAuth'.ucfirst($type);
         if (!method_exists($this, $method)) {
             throw new Exception("Invalid auth type: $type");
         }
@@ -141,6 +143,7 @@ class Http extends Connector
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthBasic($config = [])
@@ -148,13 +151,14 @@ class Http extends Connector
         return [
             'auth' => [
                 $config['username'],
-                $config['password']
-            ]
+                $config['password'],
+            ],
         ];
     }
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthDigest($config = [])
@@ -164,12 +168,13 @@ class Http extends Connector
                 $config['username'],
                 $config['password'],
                 'digest',
-            ]
+            ],
         ];
     }
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthNtlm($config = [])
@@ -179,12 +184,13 @@ class Http extends Connector
                 $config['username'],
                 $config['password'],
                 'ntlm',
-            ]
+            ],
         ];
     }
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthOauth1($config = [])
@@ -196,13 +202,14 @@ class Http extends Connector
         $clientConfig['auth'] = 'oauth';
 
         return [
-            'auth' => 'oauth',
-            'handler' => $stack
+            'auth'    => 'oauth',
+            'handler' => $stack,
         ];
     }
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthOauth2($config = [])
@@ -218,13 +225,14 @@ class Http extends Connector
         $stack->push($oauth);
 
         return [
-            'auth' => 'oauth',
-            'handler' => $stack
+            'auth'    => 'oauth',
+            'handler' => $stack,
         ];
     }
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthCookie($config = [])
@@ -245,20 +253,21 @@ class Http extends Connector
         $stack->push($middleware);
 
         return [
-            'auth' => 'cookie',
-            'handler' => $stack
+            'auth'    => 'cookie',
+            'handler' => $stack,
         ];
     }
 
     /**
      * @param array $config
+     *
      * @return array
      */
     private function getClientConfigAuthCustom($config = [])
     {
         return [
-            'auth' => $config['auth'],
-            'handler' => $config['handler']
+            'auth'    => $config['auth'],
+            'handler' => $config['handler'],
         ];
     }
 
