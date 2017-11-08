@@ -2,6 +2,7 @@
 
 namespace Ghc\Rosetta\Connectors;
 
+use Exception;
 use Ghc\Rosetta\Messages\HttpResponse;
 use gomes81\GuzzleHttp\Subscriber\CookieAuth;
 use GuzzleHttp\Client;
@@ -109,73 +110,156 @@ class Http extends Connector
         $this->setClient(new Client($this->config->all()));
     }
 
+    /**
+     * @param array $config
+     * @throws Exception
+     * @uses  getClientConfigAuthBasic
+     * @uses  getClientConfigAuthDigest
+     * @uses  getClientConfigAuthNtlm
+     * @uses  getClientConfigAuthOauth1
+     * @uses  getClientConfigAuthOauth2
+     * @uses  getClientConfigAuthCookie
+     * @uses  getClientConfigAuthCustom
+     */
     public function setAuth($config = [])
     {
-        $clientConfig = [];
         $type = $config['type'];
         unset($config['type']);
 
-        switch ($type) {
-            case self::AUTH_BASIC:
-                $clientConfig['auth'] = [
-                    $config['username'],
-                    $config['password'],
-                ];
-                break;
-            case self::AUTH_DIGEST:
-            case self::AUTH_NTLM:
-                $clientConfig['auth'] = [
-                    $config['username'],
-                    $config['password'],
-                    $type,
-                ];
-                break;
-            case self::AUTH_OAUTH1:
-                $stack = HandlerStack::create();
-                $middleware = new Oauth1($config);
-                $stack->push($middleware);
-                $clientConfig['handler'] = $stack;
-                $clientConfig['auth'] = 'oauth';
-                break;
-            case self::AUTH_OAUTH2:
-                $authClient = new Client(['base_uri' => $config['uri']]);
-                $grantType = '\\kamermans\\OAuth2\\GrantType\\'.studly_case($config['grant_type']);
-                unset($config['uri']);
-                unset($config['grant_type']);
-                /** @var \kamermans\OAuth2\GrantType\GrantTypeInterface $grant_type */
-                $grant_type = new $grantType($authClient, $config);
-                $oauth = new OAuth2Middleware($grant_type);
-                $stack = HandlerStack::create();
-                $stack->push($oauth);
-                $clientConfig['handler'] = $stack;
-                $clientConfig['auth'] = 'oauth';
-                break;
-            case self::AUTH_COOKIE:
-                $stack = HandlerStack::create();
-                if (!isset($config['cookies'])) {
-                    $config['cookies'] = null;
-                }
-                if (!isset($config['method'])) {
-                    $config['method'] = 'POST';
-                }
-                $middleware = new CookieAuth(
-                    $config['uri'],
-                    $config['fields'],
-                    $config['method'],
-                    $config['cookies']
-                );
-                $stack->push($middleware);
-                $clientConfig['handler'] = $stack;
-                $clientConfig['auth'] = 'cookie';
-                break;
-            case self::AUTH_CUSTOM:
-                $clientConfig['handler'] = $config['handler'];
-                $clientConfig['auth'] = $config['auth'];
+        $method = 'getClientConfigAuth' . ucfirst($type);
+        if (!method_exists($this, $method)) {
+            throw new Exception("Invalid auth type: $type");
         }
+
+        /** @var array $clientConfig */
+        $clientConfig = call_user_func([$this, $method], $config);
 
         foreach ($clientConfig as $key => $value) {
             $this->setConfig($key, $value);
         }
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthBasic($config = [])
+    {
+        return [
+            'auth' => [
+                $config['username'],
+                $config['password']
+            ]
+        ];
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthDigest($config = [])
+    {
+        return [
+            'auth' => [
+                $config['username'],
+                $config['password'],
+                'digest',
+            ]
+        ];
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthNtlm($config = [])
+    {
+        return [
+            'auth' => [
+                $config['username'],
+                $config['password'],
+                'ntlm',
+            ]
+        ];
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthOauth1($config = [])
+    {
+        $stack = HandlerStack::create();
+        $middleware = new Oauth1($config);
+        $stack->push($middleware);
+        $clientConfig['handler'] = $stack;
+        $clientConfig['auth'] = 'oauth';
+
+        return [
+            'auth' => 'oauth',
+            'handler' => $stack
+        ];
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthOauth2($config = [])
+    {
+        $authClient = new Client(['base_uri' => $config['uri']]);
+        $grantType = '\\kamermans\\OAuth2\\GrantType\\'.studly_case($config['grant_type']);
+        unset($config['uri']);
+        unset($config['grant_type']);
+        /** @var \kamermans\OAuth2\GrantType\GrantTypeInterface $grant_type */
+        $grant_type = new $grantType($authClient, $config);
+        $oauth = new OAuth2Middleware($grant_type);
+        $stack = HandlerStack::create();
+        $stack->push($oauth);
+
+        return [
+            'auth' => 'oauth',
+            'handler' => $stack
+        ];
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthCookie($config = [])
+    {
+        $stack = HandlerStack::create();
+        if (!isset($config['cookies'])) {
+            $config['cookies'] = null;
+        }
+        if (!isset($config['method'])) {
+            $config['method'] = 'POST';
+        }
+        $middleware = new CookieAuth(
+            $config['uri'],
+            $config['fields'],
+            $config['method'],
+            $config['cookies']
+        );
+        $stack->push($middleware);
+
+        return [
+            'auth' => 'cookie',
+            'handler' => $stack
+        ];
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    private function getClientConfigAuthCustom($config = [])
+    {
+        return [
+            'auth' => $config['auth'],
+            'handler' => $config['handler']
+        ];
     }
 
     /**

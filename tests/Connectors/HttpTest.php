@@ -162,6 +162,23 @@ class HttpTest extends TestCase
         );
     }
 
+    public function testCanSetAuthNtlm()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'     => Http::AUTH_NTLM,
+            'username' => 'user',
+            'password' => 'passwd',
+        ]);
+
+        $this->assertEquals(
+            ['auth' => ['user', 'passwd', 'ntlm']],
+            $http->getConfig()
+        );
+    }
+
     public function testCanSetAuthOauth1()
     {
         /** @var Http $http */
@@ -237,6 +254,20 @@ class HttpTest extends TestCase
             ['handler' => null, 'auth' => 'test'],
             $http->getConfig()
         );
+    }
+
+    public function testCannotSetUndefinedAuth()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $this->expectException(
+            \Exception::class
+        );
+
+        $http->setAuth([
+            'type'    => 'wrong',
+        ]);
     }
 
     public function testCanSetAuthOnCreate()
