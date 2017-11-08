@@ -8,6 +8,7 @@ class ManagerException extends Exception
 {
     /**
      * @param $class
+     *
      * @return static
      */
     public static function undefinedConnector($class)
@@ -17,6 +18,7 @@ class ManagerException extends Exception
 
     /**
      * @param $class
+     *
      * @return static
      */
     public static function undefinedMessage($class)
@@ -26,6 +28,7 @@ class ManagerException extends Exception
 
     /**
      * @param $class
+     *
      * @return static
      */
     public static function undefinedTransformer($class)
@@ -35,6 +38,7 @@ class ManagerException extends Exception
 
     /**
      * @param $class
+     *
      * @return static
      */
     public static function undefinedPipe($class)
@@ -44,6 +48,7 @@ class ManagerException extends Exception
 
     /**
      * @param $class
+     *
      * @return static
      */
     public static function undefinedMatcher($class)
