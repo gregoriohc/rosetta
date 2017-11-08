@@ -25,7 +25,7 @@ class Rosetta
         }
 
         if (!class_exists($class)) {
-            throw new ManagerException("Connector class '$class' does not exists");
+            throw ManagerException::undefinedConnector($class);
         }
 
         return new $class($config);
@@ -61,7 +61,7 @@ class Rosetta
         }
 
         if (!class_exists($class)) {
-            throw new ManagerException("Message class '$class' does not exists");
+            throw ManagerException::undefinedMessage($class);
         }
 
         return new $class($data, $config);
@@ -82,7 +82,7 @@ class Rosetta
         }
 
         if (!class_exists($class)) {
-            throw new ManagerException("Transformer class '$class' does not exists");
+            throw ManagerException::undefinedTransformer($class);
         }
 
         return new $class($config);
@@ -124,7 +124,7 @@ class Rosetta
         }
 
         if (!class_exists($class)) {
-            throw new ManagerException("Pipe class '$class' does not exists");
+            throw ManagerException::undefinedPipe($class);
         }
 
         return new $class();
@@ -146,7 +146,7 @@ class Rosetta
         }
 
         if (!class_exists($class)) {
-            throw new ManagerException("Matcher class '$class' does not exists");
+            throw ManagerException::undefinedMatcher($class);
         }
 
         return new $class($data, $config);
