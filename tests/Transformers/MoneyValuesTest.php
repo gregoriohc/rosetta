@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\MoneyValues;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class MoneyValuesTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('MoneyValues', [
+        $this->transformer = Rosetta::transformer('MoneyValues', [
             'locale'        => 'en_US',
             'currency_code' => 'USD',
             'properties'    => ['dollars'],
@@ -26,7 +26,7 @@ class MoneyValuesTest extends TestCase
     {
         $this->assertInstanceOf(
             MoneyValues::class,
-            Manager::transformer('MoneyValues')
+            Rosetta::transformer('MoneyValues')
         );
     }
 

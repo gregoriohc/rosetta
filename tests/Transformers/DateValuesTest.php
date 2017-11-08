@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\DateValues;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class DateValuesTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('DateValues', [
+        $this->transformer = Rosetta::transformer('DateValues', [
             'locale'     => 'en_US',
             'timezone'   => 'UTC',
             'properties' => ['date'],
@@ -26,7 +26,7 @@ class DateValuesTest extends TestCase
     {
         $this->assertInstanceOf(
             DateValues::class,
-            Manager::transformer('DateValues')
+            Rosetta::transformer('DateValues')
         );
     }
 

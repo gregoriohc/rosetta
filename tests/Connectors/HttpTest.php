@@ -3,8 +3,8 @@
 namespace Tests\Ghc\Rosetta\Connectors;
 
 use Ghc\Rosetta\Connectors\Http;
-use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Messages\HttpResponse;
+use Ghc\Rosetta\Rosetta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -25,7 +25,7 @@ class HttpTest extends TestCase
 
         $this->client = new Client(['handler' => $handler]);
 
-        $this->http = Manager::connector(Http::class);
+        $this->http = Rosetta::connector(Http::class);
         $this->http->setClient($this->client);
     }
 
@@ -33,7 +33,7 @@ class HttpTest extends TestCase
     {
         $this->assertInstanceOf(
             Http::class,
-            Manager::connector(Http::class)
+            Rosetta::connector(Http::class)
         );
     }
 
@@ -53,6 +53,17 @@ class HttpTest extends TestCase
         );
     }
 
+    public function testCanBootClient()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $this->assertInstanceOf(
+            Client::class,
+            $http->getClient()
+        );
+    }
+
     public function testCanShow()
     {
         $this->assertInstanceOf(
@@ -69,11 +80,27 @@ class HttpTest extends TestCase
         );
     }
 
+    public function testCanCreateWithData()
+    {
+        $this->assertInstanceOf(
+            HttpResponse::class,
+            $this->http->create('http://example.com/post', ['foo' => 'bar'])
+        );
+    }
+
     public function testCanUpdate()
     {
         $this->assertInstanceOf(
             HttpResponse::class,
             $this->http->update('http://example.com/patch')
+        );
+    }
+
+    public function testCanUpdateWithData()
+    {
+        $this->assertInstanceOf(
+            HttpResponse::class,
+            $this->http->update('http://example.com/patch', ['foo' => 'bar'])
         );
     }
 
@@ -85,11 +112,149 @@ class HttpTest extends TestCase
         );
     }
 
+    public function testCanReplaceWithData()
+    {
+        $this->assertInstanceOf(
+            HttpResponse::class,
+            $this->http->replace('http://example.com/put', ['foo' => 'bar'])
+        );
+    }
+
     public function testCanDelete()
     {
         $this->assertInstanceOf(
             HttpResponse::class,
             $this->http->delete('http://example.com/delete')
+        );
+    }
+
+    public function testCanSetAuthBasic()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'     => Http::AUTH_BASIC,
+            'username' => 'user',
+            'password' => 'passwd',
+        ]);
+
+        $this->assertEquals(
+            ['auth' => ['user', 'passwd']],
+            $http->getConfig()
+        );
+    }
+
+    public function testCanSetAuthDigest()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'     => Http::AUTH_DIGEST,
+            'username' => 'user',
+            'password' => 'passwd',
+        ]);
+
+        $this->assertEquals(
+            ['auth' => ['user', 'passwd', 'digest']],
+            $http->getConfig()
+        );
+    }
+
+    public function testCanSetAuthOauth1()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'            => Http::AUTH_OAUTH1,
+            'consumer_key'    => 'key',
+            'consumer_secret' => 'secret',
+            'token'           => 'accesskey',
+            'token_secret'    => 'accesssecret',
+        ]);
+
+        $this->assertArraySubset(
+            ['auth' => 'oauth'],
+            $http->getConfig()
+        );
+    }
+
+    public function testCanSetAuthOauth2()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'          => Http::AUTH_OAUTH2,
+            'uri'           => 'http://example.com/access_token',
+            'grant_type'    => 'password_credentials',
+            'client_id'     => 'id',
+            'client_secret' => 'secret',
+            'username'      => 'user',
+            'password'      => 'passwd',
+        ]);
+
+        $this->assertArraySubset(
+            ['auth' => 'oauth'],
+            $http->getConfig()
+        );
+    }
+
+    public function testCanSetAuthCookie()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'   => Http::AUTH_COOKIE,
+            'uri'    => 'http://example.com/login',
+            'fields' => [
+                'username' => 'user',
+                'password' => 'passwd',
+            ],
+        ]);
+
+        $this->assertArraySubset(
+            ['auth' => 'cookie'],
+            $http->getConfig()
+        );
+    }
+
+    public function testCanSetAuthCustom()
+    {
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class);
+
+        $http->setAuth([
+            'type'    => Http::AUTH_CUSTOM,
+            'handler' => null,
+            'auth'    => 'test',
+        ]);
+
+        $this->assertArraySubset(
+            ['handler' => null, 'auth' => 'test'],
+            $http->getConfig()
+        );
+    }
+
+    public function testCanSetAuthOnCreate()
+    {
+        $authConfig = [
+            'type'     => Http::AUTH_BASIC,
+            'username' => 'user',
+            'password' => 'passwd',
+        ];
+
+        /** @var Http $http */
+        $http = Rosetta::connector(Http::class, ['auth_config' => $authConfig]);
+
+        $http->getClient();
+
+        $this->assertEquals(
+            ['auth_config' => null, 'auth' => ['user', 'passwd']],
+            $http->getConfig()
         );
     }
 }

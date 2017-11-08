@@ -2,8 +2,8 @@
 
 namespace Tests\Ghc\Rosetta\Connectors;
 
-use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Matchers\Matcher;
+use Ghc\Rosetta\Rosetta;
 use PHPUnit\Framework\TestCase;
 
 class MatcherTest extends TestCase
@@ -12,14 +12,14 @@ class MatcherTest extends TestCase
     {
         $this->assertInstanceOf(
             Matcher::class,
-            Manager::matcher(TestMatcher::class)
+            Rosetta::matcher(TestMatcher::class)
         );
     }
 
     public function testCanGetData()
     {
         /** @var Matcher $matcher */
-        $matcher = Manager::matcher(TestMatcher::class, []);
+        $matcher = Rosetta::matcher(TestMatcher::class, []);
 
         $this->assertEquals(
             [],
@@ -30,7 +30,7 @@ class MatcherTest extends TestCase
     public function testCanMatch()
     {
         /** @var Matcher $matcher */
-        $matcher = Manager::matcher(TestMatcher::class, true);
+        $matcher = Rosetta::matcher(TestMatcher::class, true);
 
         $this->assertEquals(
             true,
@@ -41,7 +41,7 @@ class MatcherTest extends TestCase
     public function testCanMatchAndRun()
     {
         /** @var Matcher $matcher */
-        $matcher = Manager::matcher(TestMatcher::class, true);
+        $matcher = Rosetta::matcher(TestMatcher::class, true);
 
         $this->assertEquals(
             'foo',

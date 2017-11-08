@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\DataTable;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +15,14 @@ class DataTableTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('DataTable');
+        $this->transformer = Rosetta::transformer('DataTable');
     }
 
     public function testCanBeCreated()
     {
         $this->assertInstanceOf(
             DataTable::class,
-            Manager::transformer('DataTable')
+            Rosetta::transformer('DataTable')
         );
     }
 

@@ -25,7 +25,7 @@ trait Configurable
      * @param array|string $config
      * @param mixed        $value
      *
-     * @return Configurable
+     * @return self
      */
     public function setConfig($config, $value = null)
     {
@@ -40,9 +40,13 @@ trait Configurable
 
     /**
      * @param array $config
+     *
+     * @return self
      */
     protected function addDefaultConfig($config)
     {
         $this->setConfig(array_merge($config, $this->getConfig()));
+
+        return $this;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\RemoveProperties;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ class RemovePropertiesTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('RemoveProperties', [
+        $this->transformer = Rosetta::transformer('RemoveProperties', [
             'properties' => ['foo'],
         ]);
     }
@@ -24,7 +24,7 @@ class RemovePropertiesTest extends TestCase
     {
         $this->assertInstanceOf(
             RemoveProperties::class,
-            Manager::transformer('RemoveProperties')
+            Rosetta::transformer('RemoveProperties')
         );
     }
 

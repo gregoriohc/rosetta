@@ -2,8 +2,8 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Messages\PhpObject;
+use Ghc\Rosetta\Rosetta;
 use PHPUnit\Framework\TestCase;
 
 class PhpObjectTest extends TestCase
@@ -12,14 +12,14 @@ class PhpObjectTest extends TestCase
     {
         $this->assertInstanceOf(
             PhpObject::class,
-            Manager::message('PhpObject')
+            Rosetta::message('PhpObject')
         );
     }
 
     public function testCanBeCreatedWithData()
     {
         $object = new \StdClass();
-        $message = Manager::message('PhpObject', $object);
+        $message = Rosetta::message('PhpObject', $object);
 
         $this->assertInstanceOf(
             PhpObject::class,
@@ -31,7 +31,7 @@ class PhpObjectTest extends TestCase
     {
         $object = new \StdClass();
         $config = ['foo' => 'bar'];
-        $message = Manager::message('PhpObject', $object, $config);
+        $message = Rosetta::message('PhpObject', $object, $config);
 
         $this->assertInstanceOf(
             PhpObject::class,
@@ -54,7 +54,7 @@ class PhpObjectTest extends TestCase
         $object = new \StdClass();
         $object->foo = 'bar';
         $data = json_decode(json_encode($object), true);
-        $message = Manager::message('PhpObject', $object);
+        $message = Rosetta::message('PhpObject', $object);
 
         $this->assertEquals(
             $data,
@@ -67,7 +67,7 @@ class PhpObjectTest extends TestCase
         $object = new \StdClass();
         $object->foo = 'bar';
         $data = ['foo' => 'bar'];
-        $message = Manager::message('PhpObject', $object);
+        $message = Rosetta::message('PhpObject', $object);
 
         $this->assertInstanceOf(
             PhpObject::class,
@@ -85,7 +85,7 @@ class PhpObjectTest extends TestCase
         $object = new \StdClass();
         $object->foo = 'bar';
         $data = json_decode(json_encode($object), true);
-        $message = Manager::message('PhpObject', $object);
+        $message = Rosetta::message('PhpObject', $object);
 
         $this->assertEquals(
             serialize($data),

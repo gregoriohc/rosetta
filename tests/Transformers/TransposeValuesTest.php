@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\TransposeValues;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +15,14 @@ class TransposeValuesTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('TransposeValues');
+        $this->transformer = Rosetta::transformer('TransposeValues');
     }
 
     public function testCanBeCreated()
     {
         $this->assertInstanceOf(
             TransposeValues::class,
-            Manager::transformer('TransposeValues')
+            Rosetta::transformer('TransposeValues')
         );
     }
 

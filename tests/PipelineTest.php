@@ -6,11 +6,13 @@ use Ghc\Rosetta\Collection;
 use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
 use Ghc\Rosetta\Item;
-use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Matchers\DataIsArray;
 use Ghc\Rosetta\Messages\PhpArray;
 use Ghc\Rosetta\Pipeline;
 use Ghc\Rosetta\Pipes\DataGetKey;
+use Ghc\Rosetta\Pipes\DataMerge;
+use Ghc\Rosetta\Pipes\DataSetKey;
+use Ghc\Rosetta\Rosetta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -69,9 +71,11 @@ class PipelineTest extends TestCase
 
             return $inputData;
         });
+        $pipeline->pushPipe(new DataSetKey(), ['key' => 'pim', 'value' => 'pum']);
+        $pipeline->pushPipe(new DataMerge(), ['data' => ['pim' => 'pom', 'foo' => 'bar']]);
 
         $this->assertEquals(
-            ['bar' => 456],
+            ['bar' => 456, 'pim' => 'pom', 'foo' => 'bar'],
             $pipeline->flow(['foo' => ['bar' => 123]])
         );
     }
@@ -104,7 +108,7 @@ class PipelineTest extends TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
         /** @var Http $http */
-        $http = Manager::connector(Http::class);
+        $http = Rosetta::connector(Http::class);
         $http->setClient($client);
         $pipeline = new Pipeline();
         $pipeline->pushPipe(new Request($http, 'show', 'http://example.com'));

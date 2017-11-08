@@ -4,8 +4,8 @@ namespace Tests\Ghc\Rosetta\Connectors;
 
 use Ghc\Rosetta\Connectors\Http;
 use Ghc\Rosetta\Connectors\Request;
-use Ghc\Rosetta\Manager;
 use Ghc\Rosetta\Messages\HttpResponse;
+use Ghc\Rosetta\Rosetta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -26,7 +26,7 @@ class RequestTest extends TestCase
 
         $this->client = new Client(['handler' => $handler]);
 
-        $this->http = Manager::connector(Http::class);
+        $this->http = Rosetta::connector(Http::class);
         $this->http->setClient($this->client);
     }
 
@@ -34,13 +34,13 @@ class RequestTest extends TestCase
     {
         $this->assertInstanceOf(
             Request::class,
-            Manager::connectorRequest($this->http, 'show', 'http://example.com')
+            Rosetta::connectorRequest($this->http, 'show', 'http://example.com')
         );
     }
 
     public function testCanGetConnector()
     {
-        $request = Manager::connectorRequest($this->http, 'show', 'http://example.com');
+        $request = Rosetta::connectorRequest($this->http, 'show', 'http://example.com');
 
         $this->assertInstanceOf(
             Http::class,
@@ -50,7 +50,7 @@ class RequestTest extends TestCase
 
     public function testCanGetMethod()
     {
-        $request = Manager::connectorRequest($this->http, 'show', 'http://example.com');
+        $request = Rosetta::connectorRequest($this->http, 'show', 'http://example.com');
 
         $this->assertEquals(
             'show',
@@ -60,7 +60,7 @@ class RequestTest extends TestCase
 
     public function testCanGetUri()
     {
-        $request = Manager::connectorRequest($this->http, 'show', 'http://example.com');
+        $request = Rosetta::connectorRequest($this->http, 'show', 'http://example.com');
 
         $this->assertEquals(
             'http://example.com',
@@ -71,7 +71,7 @@ class RequestTest extends TestCase
     public function testCanGetData()
     {
         $data = ['foo' => 'bar'];
-        $request = Manager::connectorRequest($this->http, 'create', 'http://example.com', $data);
+        $request = Rosetta::connectorRequest($this->http, 'create', 'http://example.com', $data);
 
         $this->assertEquals(
             $data,
@@ -82,7 +82,7 @@ class RequestTest extends TestCase
     public function testCanGetOptions()
     {
         $options = ['foo' => 'bar'];
-        $request = Manager::connectorRequest($this->http, 'create', 'http://example.com', [], $options);
+        $request = Rosetta::connectorRequest($this->http, 'create', 'http://example.com', [], $options);
 
         $this->assertEquals(
             $options,
@@ -92,7 +92,7 @@ class RequestTest extends TestCase
 
     public function testCanHandleShow()
     {
-        $request = Manager::connectorRequest($this->http, 'show', 'http://example.com');
+        $request = Rosetta::connectorRequest($this->http, 'show', 'http://example.com');
 
         $this->assertInstanceOf(
             HttpResponse::class,
@@ -103,7 +103,7 @@ class RequestTest extends TestCase
     public function testCanHandleCreate()
     {
         $data = ['foo' => 'bar'];
-        $request = Manager::connectorRequest($this->http, 'create', 'http://example.com', $data);
+        $request = Rosetta::connectorRequest($this->http, 'create', 'http://example.com', $data);
 
         $this->assertInstanceOf(
             HttpResponse::class,

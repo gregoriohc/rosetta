@@ -2,7 +2,7 @@
 
 namespace Tests\Ghc\Rosetta\Messages;
 
-use Ghc\Rosetta\Manager;
+use Ghc\Rosetta\Rosetta;
 use Ghc\Rosetta\Transformers\Skip;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +15,14 @@ class SkipTest extends TestCase
 
     public function setUp()
     {
-        $this->transformer = Manager::transformer('Skip');
+        $this->transformer = Rosetta::transformer('Skip');
     }
 
     public function testCanBeCreated()
     {
         $this->assertInstanceOf(
             Skip::class,
-            Manager::transformer('Skip')
+            Rosetta::transformer('Skip')
         );
     }
 
